@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="fr.ensicaen.genielogiciel.mvp.presenter.LoginPresenterTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-17T12:54:06" hostname="N302L-G16P04.png.unicaen.fr" time="0.504">
+  <properties/>
+  <testcase name="should_return_correct_message_when_given_a_name[0]" classname="fr.ensicaen.genielogiciel.mvp.presenter.LoginPresenterTest" time="0.501"/>
+  <testcase name="should_return_correct_message_when_given_a_name[1]" classname="fr.ensicaen.genielogiciel.mvp.presenter.LoginPresenterTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

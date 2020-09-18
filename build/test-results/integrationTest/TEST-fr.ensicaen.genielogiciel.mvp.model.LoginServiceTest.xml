@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="fr.ensicaen.genielogiciel.mvp.model.LoginServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-17T12:54:07" hostname="N302L-G16P04.png.unicaen.fr" time="0.014">
+  <properties/>
+  <testcase name="sayHelloTest[0]" classname="fr.ensicaen.genielogiciel.mvp.model.LoginServiceTest" time="0.013"/>
+  <testcase name="sayHelloTest[1]" classname="fr.ensicaen.genielogiciel.mvp.model.LoginServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
