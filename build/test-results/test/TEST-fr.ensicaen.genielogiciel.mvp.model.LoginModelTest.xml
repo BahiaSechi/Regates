@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="fr.ensicaen.genielogiciel.mvp.model.LoginModelTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-17T12:52:31" hostname="N302L-G16P04.png.unicaen.fr" time="0.0">
-  <properties/>
-  <testcase name="should_get_message_when_set_message" classname="fr.ensicaen.genielogiciel.mvp.model.LoginModelTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
