@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/regate.iml" filepath="$PROJECT_DIR$/regate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.integrationTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.main.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.test.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.test.iml" />
+    </modules>
+  </component>
+</project>

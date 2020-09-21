@@ -1,0 +1,12 @@
+regates/mvp/vue/LoginView.java
+ regates.mvp.vue.LoginView
+regates/mvp/presenter/IPresenter.java
+ regates.mvp.presenter.IPresenter
+regates/mvp/model/LoginModel.java
+ regates.mvp.model.LoginModel
+regates/mvp/presenter/LoginPresenter.java
+ regates.mvp.presenter.LoginPresenter
+regates/mvp/model/LoginService.java
+ regates.mvp.model.LoginService
+regates/mvp/LoginMain.java
+ regates.mvp.LoginMain
