@@ -1,0 +1,6 @@
+regates/mvp/model/LoginModelTest.java
+ regates.mvp.model.LoginModelTest
+regates/mvp/model/LoginServiceTest.java
+ regates.mvp.model.LoginServiceTest
+regates/mvp/presenter/LoginPresenterTest.java
+ regates.mvp.presenter.LoginPresenterTest
