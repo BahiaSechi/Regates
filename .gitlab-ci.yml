@@ -1,38 +1,44 @@
-image: java:8-jdk
+# Continuous integration for Gradle and JVM applications
+image: openjdk:11-jdk
+
+variables:
+  # Using a fresh runtime for each build to isolate each runtime from any previous builds.
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  # Variable for the runner at ENSICAEN
+  http_proxy: http://193.49.200.22:3128
+  https_proxy: http://193.49.200.22:3128
+  HTTP_PROXY: http://193.49.200.22:3128
+  HTTPS_PROXY: http://193.49.200.22:3128
+
+before_script:
+  - chmod +x gradlew
+  - mv gradle.properties.ci gradle.properties
+  - apt-get update -y -qq
+  - apt-get install -y -qq shellcheck procps vim nano net-tools
 
 stages:
   - build
   - test
 
-before_script:
-  #  - echo `pwd` # debug
-  #  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
 build:
-  tags:
+  tags :
     - gitlab-runner-ensicaen
   stage: build
   script:
-    - ./gradlew assemble
-  artifacts:
-    paths:
-      - build/libs/*.jar
-    expire_in: 1 week
+    - ./gradlew -Pci --console=plain --build-cache assemble
   only:
     - master
 
-test:
-  tags:
+unit_test:
+  tags :
     - gitlab-runner-ensicaen
   stage: test
   script:
-    - ./gradlew check
-
-after_script:
-  - echo "End CI"
+    - ./gradlew -Pci --console=plain test jacocoTestReport
+    - cat build/jacocoHtml/index.html
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - build/jacocoHtml/
