@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/regate.iml" filepath="$PROJECT_DIR$/regate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.integrationTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.main.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate.test.iml" filepath="$PROJECT_DIR$/.idea/modules/regate.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/regate.iml" filepath="$PROJECT_DIR$/regate.iml" group="regate" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate_integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/regate_integrationTest.iml" group="regate" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate_main.iml" filepath="$PROJECT_DIR$/.idea/modules/regate_main.iml" group="regate" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/regate_test.iml" filepath="$PROJECT_DIR$/.idea/modules/regate_test.iml" group="regate" />
     </modules>
   </component>
 </project>
