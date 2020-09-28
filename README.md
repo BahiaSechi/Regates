@@ -31,3 +31,6 @@ Le projet a la structure suivante :
             ├── java
                    └── fr.ensicaen.genielogiciel.mvp.*.java
             └── resources
+
+# Compiler le projet avec Lombok
+- Installer le plugin Lombok (depuis la marketplace)
