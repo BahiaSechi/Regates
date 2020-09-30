@@ -1,13 +1,13 @@
 package regates.mvp.presenter;
 
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import regates.mvp.model.Boat;
 import regates.mvp.model.BoatObserver;
 import regates.mvp.model.Game;
@@ -18,6 +18,16 @@ import java.util.ResourceBundle;
 public class BoardController implements Initializable, BoatObserver {
     @FXML
     ImageView regate;
+    @FXML
+    Label txtCap;
+    @FXML
+    Label txtStrength;
+    @FXML
+    Label txtSpeed;
+    @FXML
+    Label txtWind;
+    @FXML
+    ImageView imgWheel;
 
     private Game game;
     private Scene scene;
@@ -44,11 +54,10 @@ public class BoardController implements Initializable, BoatObserver {
     public void setScene(Scene scene) {
         this.scene = scene;
         this.scene.setOnKeyPressed(event -> {
-            System.out.println("hello");
             if (event.getCode() == KeyCode.LEFT) {
-                regate.setLayoutX(regate.getLayoutX() - 2);
+                game.getBoat().rotate(-1);
             } else if (event.getCode() == KeyCode.RIGHT) {
-                regate.setLayoutX(regate.getLayoutX() + 2);
+                game.getBoat().rotate(+1);
             }
         });
     }
@@ -64,5 +73,11 @@ public class BoardController implements Initializable, BoatObserver {
         regate.setLayoutX(boat.getPosition().getX());
         regate.setLayoutY(boat.getPosition().getY());
         regate.setRotate(boat.getAngle());
+        imgWheel.setRotate(boat.getAngle());
+
+        Platform.runLater(() -> {
+            txtSpeed.setText(boat.getSpeed() + " nd");
+            txtCap.setText(boat.getAngle() + " °");
+        });
     }
 }

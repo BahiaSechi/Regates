@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -116,15 +115,15 @@
                         <Image url="@img/chene.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="258.0" fitWidth="265.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgWheel" fitHeight="258.0" fitWidth="265.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/gouv.png" />
                      </image>
                   </ImageView>
-                  <TextField id="force" disable="true" editable="false" layoutX="951.0" layoutY="80.0" />
-                  <TextField id="cap" disable="true" editable="false" layoutX="95.0" layoutY="90.0" />
-                  <TextField id="speed" disable="true" editable="false" layoutX="95.0" layoutY="202.0" />
-                  <TextField id="wind" disable="true" editable="false" layoutX="951.0" layoutY="197.0" />
+                  <Label fx:id="txtStrength" layoutX="945.0" layoutY="78.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
+                  <Label fx:id="txtWind" layoutX="945.0" layoutY="201.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
+                  <Label fx:id="txtCap" layoutX="86.0" layoutY="91.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
+                  <Label fx:id="txtSpeed" layoutX="86.0" layoutY="207.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
                </children>
             </AnchorPane>
          </bottom></BorderPane>

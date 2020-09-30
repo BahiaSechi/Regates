@@ -8,25 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 public class Boat {
 
-    private float angle;
     private static String[] boatSpeeds;
-    private float degree;
-    private float speed;
+    private int angle;
+    private double degree;
+    private double speed;
     private Coordinate position;
     private List<BoatObserver> boatObservers = new ArrayList<>();
 
-    public Boat(float degree, float speed, Coordinate position) {
-        this.degree = degree;
-        this.speed = speed;
+    public Boat(int degree, Coordinate position) {
+        this.angle = degree;
         this.position = position;
         Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
-    }
-
-    public void setPosition(Coordinate c) {
-        System.out.println(c);
-        this.position = c;
     }
 
     /**
@@ -41,16 +36,10 @@ public class Boat {
     /**
      * Determine the speed of the boat according to wind strength and angle
      * @param windStrength Wind Strength
-     * @param angle Angle between boat and wind
      * @return Boat Speed
-     * @throws Exception If angle is invalid
      */
-    public float determinateSpeed(int windStrength, int angle) throws Exception {
-        if (angle < 1 || angle > 180) {
-            throw new Exception("Invalid angle");
-        }
-
-        String[] speedByAngle = Boat.boatSpeeds[angle].split(" "); // Extract the line matching the angle
+    public double determinateSpeed(int windStrength) {
+        String[] speedByAngle = Boat.boatSpeeds[Math.abs(this.angle % 180)].split(" "); // Extract the line matching the angle
         String[] strengths = Boat.boatSpeeds[0].split(" ");
         int index;
         for (index = 1; index < strengths.length; index++) {
@@ -60,6 +49,27 @@ public class Boat {
             }
         }
         return Float.parseFloat(speedByAngle[index]);
+    }
+
+    public void move(int windStrength) {
+        try {
+            double speed = 3; // TODO use determinateSpeed
+            int adj = (int)Math.floor(speed * Math.cos(this.angle));
+            int opp = (int)Math.floor(speed * Math.sin(this.angle));
+            this.position = new Coordinate(this.position.getX() - adj, this.position.getY() - opp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rotate(int shift) {
+        if (shift == -1 && this.angle - 1 == 0) {
+            this.angle = 360;
+        } else if (shift == 1 && this.angle + 1 == 361) {
+            this.angle = 1;
+        } else {
+            this.angle += shift;
+        }
     }
 
     public void addObserver(BoatObserver bo){
