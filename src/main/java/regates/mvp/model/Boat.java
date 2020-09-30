@@ -13,10 +13,6 @@ public class Boat {
     private float speed;
 
 
-    public int move(){
-        return 0;
-    }
-
     public boolean isCollision(Coordinate a, Coordinate b){
         return true;
     }
