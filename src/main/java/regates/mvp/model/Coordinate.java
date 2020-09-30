@@ -1,31 +1,20 @@
 package regates.mvp.model;
-
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.awt.geom.Point2D;
 
 @NoArgsConstructor
-public class Coordinate extends Point2D {
+@Getter
+@Setter
 
-    public Coordinate(double x, double y) {
-        setLocation(x, y);
-    }
+public class Coordinate   {
+    public int X;
+    public int Y;
+    // Cette variable est a 0 si ces coordonnées sont occuppés pas des bouées et 1 sinon.
+    public boolean estVide;
 
-    @Override
-    public double getX() {
-        return 0;
-    }
-
-    @Override
-    public double getY() {
-        return 0;
-    }
-
-
-    @Override
-    public void setLocation(double x, double y) {
-
-    }
-    //Create a vector
 
 }
+
