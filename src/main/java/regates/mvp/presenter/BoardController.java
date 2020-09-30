@@ -56,12 +56,14 @@ public class BoardController implements Initializable, BoatObserver {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.game = new Game();
+        this.game.setObserver(this);
     }
 
     @Override
     public void update(Boat boat) {
-        regate.setX(boat.getPosition().getX());
-        regate.setY(boat.getPosition().getY());
+        System.out.println("update");
+        regate.setLayoutX(0);
+        regate.setLayoutY(0);
         regate.setRotate(boat.getAngle());
     }
 }

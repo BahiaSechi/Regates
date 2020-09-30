@@ -10,18 +10,22 @@ public class Game {
     private Boat boat;
 
     public Game() {
-        this.boat = new Boat(1, 1, null);
+        this.boat = new Boat(1, 1, new Coordinate(0, 0));
         tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
-                System.out.println("aaa");
                 boat.setPosition(new Coordinate(boat.getPosition().getX() + 1, boat.getPosition().getY()));
+                System.out.println(boat.getPosition().getX() + ":" + boat.getPosition().getY());
                 boat.notifyObservers();
             }
         };
         t = new Timer();
         t.scheduleAtFixedRate(tt, 0, 1000);
+    }
+
+    public void setObserver(BoatObserver bo) {
+        this.boat.addObserver(bo);
     }
 
 

@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import regates.mvp.presenter.BoardController;
+import regates.mvp.model.Boat;
 
 public class BoardView extends Application {
 
