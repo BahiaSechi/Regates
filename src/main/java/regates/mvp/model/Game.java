@@ -10,12 +10,14 @@ public class Game {
     private Boat boat;
 
     public Game() {
-
+        this.boat = new Boat(1, 1, null);
         tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
+                System.out.println("aaa");
                 boat.setPosition(new Coordinate(boat.getPosition().getX() + 1, boat.getPosition().getY()));
+                boat.notifyObservers();
             }
         };
         t = new Timer();
@@ -26,13 +28,4 @@ public class Game {
     public void launchGame(String s) {
 
     }
-
-    public static void main(String[] args) {
-        Game g = new Game();
-        for (; ; ) {
-
-        }
-    }
-
-
 }

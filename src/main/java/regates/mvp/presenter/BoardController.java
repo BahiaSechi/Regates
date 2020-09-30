@@ -24,6 +24,7 @@ public class BoardController implements Initializable, BoatObserver {
 
     /**
      * Handle menu about.
+     *
      * @param actionEvent
      */
     public void handleAbout(javafx.event.ActionEvent actionEvent) {
@@ -44,9 +45,9 @@ public class BoardController implements Initializable, BoatObserver {
         this.scene = scene;
         this.scene.setOnKeyPressed(event -> {
             System.out.println("hello");
-            if(event.getCode() == KeyCode.LEFT){
+            if (event.getCode() == KeyCode.LEFT) {
                 regate.setLayoutX(regate.getLayoutX() - 2);
-            }else if(event.getCode() == KeyCode.RIGHT){
+            } else if (event.getCode() == KeyCode.RIGHT) {
                 regate.setLayoutX(regate.getLayoutX() + 2);
             }
         });
@@ -59,6 +60,8 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        regate.setX(boat.);
+        regate.setX(boat.getPosition().getX());
+        regate.setY(boat.getPosition().getY());
+        regate.setRotate(boat.getAngle());
     }
 }

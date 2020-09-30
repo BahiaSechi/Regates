@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Boat {
 
-    private float degree;
+    private float angle;
     private float speed;
     private Coordinate position;
     private List<BoatObserver> boatObservers = new ArrayList<>();
