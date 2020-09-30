@@ -6,6 +6,11 @@ import java.awt.geom.Point2D;
 
 @NoArgsConstructor
 public class Coordinate extends Point2D {
+
+    public Coordinate(double x, double y) {
+        setLocation(x, y);
+    }
+
     @Override
     public double getX() {
         return 0;

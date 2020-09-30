@@ -11,9 +11,9 @@ public class Boat {
 
     private float degree;
     private float speed;
+    private Coordinate position;
 
-
-    public boolean isCollision(Coordinate a, Coordinate b){
+    public boolean isCollision(Coordinate a, Coordinate b) {
         return true;
     }
 
