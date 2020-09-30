@@ -18,6 +18,4 @@ public class Wind {
     public float getCurrentSpeed(float angle) {
         return 0f;
     }
-
-
 }
