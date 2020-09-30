@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 public class Boat {
 
     private float angle;
@@ -23,6 +22,11 @@ public class Boat {
         this.speed = speed;
         this.position = position;
         Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
+    }
+
+    public void setPosition(Coordinate c) {
+        System.out.println(c);
+        this.position = c;
     }
 
     /**

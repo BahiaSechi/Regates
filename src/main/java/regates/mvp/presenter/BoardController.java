@@ -61,9 +61,8 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        System.out.println("update");
-        regate.setLayoutX(0);
-        regate.setLayoutY(0);
+        regate.setLayoutX(boat.getPosition().getX());
+        regate.setLayoutY(boat.getPosition().getY());
         regate.setRotate(boat.getAngle());
     }
 }

@@ -1,20 +1,19 @@
 package regates.mvp.model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.geom.Point2D;
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class Coordinate   {
-    public int X;
-    public int Y;
-    // Cette variable est a 0 si ces coordonnées sont occuppés pas des bouées et 1 sinon.
-    public boolean estVide;
+    private int x;
+    private int y;
 
-
+    @Override
+    public String toString() {
+        return this.x + " : " + this.y;
+    }
 }
-
