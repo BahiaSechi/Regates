@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="749.0" prefWidth="1266.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10" prefHeight="951.0" prefWidth="1167.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.vue.BoardView">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -14,9 +14,9 @@
         <RowConstraints />
     </rowConstraints>
    <children>
-      <BorderPane prefHeight="787.0" prefWidth="1280.0">
+      <BorderPane prefHeight="948.0" prefWidth="1066.0">
          <top>
-            <MenuBar BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="0.0" prefWidth="1193.0" BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="Game">
                   <items>
@@ -25,7 +25,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem id="about" fx:id="about" mnemonicParsing="false" onAction="#handleAbout" text="About" />
                   </items>
                 </Menu>
               </menus>
@@ -34,35 +34,35 @@
          <center>
             <AnchorPane prefHeight="787.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="720.0" fitWidth="1357.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="648.0" fitWidth="1312.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/lightblue.jpg" />
                      </image>
                   </ImageView>
-                  <Circle id="buoy_1" fill="#1f93ff00" layoutX="563.0" layoutY="138.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="529.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                  <Circle id="buoy_1" fill="#1f93ff00" layoutX="490.0" layoutY="88.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="456.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/buoy.png" />
                      </image>
                   </ImageView>
-                  <Circle id="buoy_2" fill="#1f93ff00" layoutX="218.0" layoutY="360.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="183.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
+                  <Circle id="buoy_2" fill="#1f93ff00" layoutX="145.0" layoutY="310.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="110.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/buoy.png" />
                      </image>
                   </ImageView>
-                  <Circle id="buoy_3" fill="#1f93ff00" layoutX="556.0" layoutY="556.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="522.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
+                  <Circle id="buoy_3" fill="#1f93ff00" layoutX="483.0" layoutY="506.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="449.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/buoy.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="114.0" fitWidth="100.0" layoutX="640.0" layoutY="478.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="114.0" fitWidth="100.0" layoutX="567.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/ship.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="718.0" fitWidth="483.0" layoutX="797.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="688.0" fitWidth="415.0" layoutX="739.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/coast.png" />
                      </image>
@@ -74,43 +74,48 @@
             <AnchorPane BorderPane.alignment="CENTER" />
          </left>
          <bottom>
-            <AnchorPane prefHeight="388.0" prefWidth="1282.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="232.0" prefWidth="1155.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="428.0" fitWidth="652.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="269.0" fitWidth="449.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/chene.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="504.0" fitWidth="642.0" layoutX="640.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="271.0" fitWidth="450.0" layoutX="748.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/chene.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="414.0" fitWidth="430.0" layoutX="482.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                  <Label layoutX="963.0" layoutY="162.0" text="Vent">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Label>
+                  <Label layoutX="958.0" layoutY="48.0" text="Force">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Label>
+                  <Label layoutX="106.0" layoutY="171.0" text="Vitesse">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Label>
+                  <Label layoutX="104.0" layoutY="52.0" text="Cap">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Label>
+                  <ImageView fitHeight="270.0" fitWidth="418.0" layoutX="361.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/chene.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="258.0" fitWidth="265.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/gouv.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="963.0" layoutY="243.0" text="Vent">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font></Label>
-                  <Label layoutX="958.0" layoutY="111.0" text="Force">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font></Label>
-                  <Label layoutX="106.0" layoutY="245.0" text="Vitesse">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font></Label>
-                  <Label layoutX="104.0" layoutY="104.0" text="Cap">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font></Label>
-                  <TextField id="force" layoutX="951.0" layoutY="142.0" />
-                  <TextField id="cap" layoutX="95.0" layoutY="142.0" />
-                  <TextField id="speed" layoutX="95.0" layoutY="278.0" />
-                  <TextField id="wind" layoutX="951.0" layoutY="278.0" />
+                  <TextField id="force" layoutX="951.0" layoutY="80.0" />
+                  <TextField id="cap" layoutX="95.0" layoutY="90.0" />
+                  <TextField id="speed" layoutX="95.0" layoutY="202.0" />
+                  <TextField id="wind" layoutX="951.0" layoutY="197.0" />
                </children>
             </AnchorPane>
          </bottom></BorderPane>

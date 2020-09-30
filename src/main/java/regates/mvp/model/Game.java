@@ -16,7 +16,6 @@ public class Game {
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.setPosition(new Coordinate(boat.getPosition().getX() + 1, boat.getPosition().getY()));
-
             }
         };
         t = new Timer();
