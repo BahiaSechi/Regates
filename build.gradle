@@ -1,36 +1,60 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'java'
+    id 'jacoco'
 }
 
-apply plugin: 'java'
-apply plugin: 'application'
-apply from: 'integration-test.gradle'
-
-sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'regates.mvp.LoginMain'
+mainClassName = 'fr.ensicaen.genielogiciel.mvp.LoginMain'
 
 repositories {
     mavenCentral()
     jcenter()
-    google()
 }
 
-dependencies {
-    testCompile "junit:junit:4.1+"
-    testCompile "org.mockito:mockito-core:2.+"
-    
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
-	
-	testCompileOnly 'org.projectlombok:lombok:1.18.12'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+sourceSets.main {
+    java.srcDir file('src/main/java')
 }
 
 javafx {
     version = "11"
-    modules = [ 'javafx.controls',
-    'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    implementation(
+            [files("lib")]
+    )
+    testImplementation(
+            [group: 'junit', name: 'junit', version: '4.+'],
+            ['org.mockito:mockito-core:2.+'],
+            [files("lib")]
+    )
+}
+
+task copyLibFolder(type: Copy) {
+    description 'Copies the lib folder.'
+    from('lib')
+    into("$buildDir/classes")
+}
+
+compileJava.dependsOn copyLibFolder
+
+applicationDistribution.from(['LICENSE', 'README.md']) {
+    into ''
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
 }
