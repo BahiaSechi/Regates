@@ -7,7 +7,7 @@ plugins {
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'fr.ensicaen.genielogiciel.mvp.LoginMain'
+mainClassName = 'regates.mvp.vue.BoardView'
 
 repositories {
     mavenCentral()
@@ -20,7 +20,7 @@ sourceSets.main {
 
 javafx {
     version = "11"
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
 }
 
 dependencies {
@@ -38,6 +38,10 @@ dependencies {
             ['org.mockito:mockito-core:2.+'],
             [files("lib")]
     )
+    compile 'org.openjfx:javafx-base:11:linux'
+    compile 'org.openjfx:javafx-controls:11:linux'
+    compile 'org.openjfx:javafx-fxml:11:linux'
+    compile 'org.openjfx:javafx-graphics:11:linux'
 }
 
 task copyLibFolder(type: Copy) {

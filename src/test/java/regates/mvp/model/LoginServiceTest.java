@@ -1,4 +1,4 @@
-package regates.mvp.model;
+/**package regates.mvp.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,3 +39,4 @@ public class LoginServiceTest {
         assertEquals(output, _service.sayHello(input));
     }
 }
+*/
