@@ -1,26 +1,19 @@
 package regates.mvp.model;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.awt.geom.Point2D;
-
+@AllArgsConstructor
 @NoArgsConstructor
-public class Coordinate extends Point2D {
-    @Override
-    public double getX() {
-        return 0;
-    }
+@Getter
+@Setter
+public class Coordinate   {
+    private double x;
+    private double y;
 
     @Override
-    public double getY() {
-        return 0;
+    public String toString() {
+        return this.x + " : " + this.y;
     }
-
-
-    @Override
-    public void setLocation(double x, double y) {
-
-    }
-    //Create a vector
-
 }
