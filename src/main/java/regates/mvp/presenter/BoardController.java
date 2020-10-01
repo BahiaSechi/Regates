@@ -1,6 +1,7 @@
 package regates.mvp.presenter;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -19,13 +20,7 @@ public class BoardController implements Initializable, BoatObserver {
     @FXML
     ImageView regate;
     @FXML
-    Label txtCap;
-    @FXML
-    Label txtStrength;
-    @FXML
-    Label txtSpeed;
-    @FXML
-    Label txtWind;
+    Label txtCap, txtStrength, txtSpeed, txtWind;
     @FXML
     ImageView imgWheel;
 
@@ -33,8 +28,52 @@ public class BoardController implements Initializable, BoatObserver {
     private Scene scene;
 
     /**
-     * Handle menu about.
      *
+     * @param scene
+     */
+    public void setScene(Scene scene) {
+        this.scene = scene;
+        this.scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.LEFT) {
+                game.getBoat().rotate(-1);
+            } else if (event.getCode() == KeyCode.RIGHT) {
+                game.getBoat().rotate(+1);
+            }
+        });
+    }
+
+    /**
+     *
+     * @param location
+     * @param resources
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.game = new Game();
+        this.game.setObserver(this);
+    }
+
+    /**
+     *
+     * @param boat
+     */
+    @Override
+    public void update(Boat boat) {
+        regate.setLayoutX(boat.getPosition().getX());
+        regate.setLayoutY(boat.getPosition().getY());
+        regate.setRotate(boat.getAngle());
+        imgWheel.setRotate(boat.getAngle());
+
+        Platform.runLater(() -> {
+            txtSpeed.setText(boat.getSpeed() + " nd");
+            txtCap.setText(boat.getAngle() + " °");
+        });
+    }
+
+    // MENU FUNCTIONS
+
+    /**
+     * Handle menu about.
      * @param actionEvent
      */
     public void handleAbout(javafx.event.ActionEvent actionEvent) {
@@ -50,34 +89,13 @@ public class BoardController implements Initializable, BoatObserver {
         about.show();
     }
 
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-        this.scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.LEFT) {
-                game.getBoat().rotate(-1);
-            } else if (event.getCode() == KeyCode.RIGHT) {
-                game.getBoat().rotate(+1);
-            }
-        });
+    public void handleExit(ActionEvent actionEvent) {
+        exitGame();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.game = new Game();
-        this.game.setObserver(this);
-    }
-
-    @Override
-    public void update(Boat boat) {
-        regate.setLayoutX(boat.getPosition().getX());
-        regate.setLayoutY(boat.getPosition().getY());
-        regate.setRotate(boat.getAngle());
-        imgWheel.setRotate(boat.getAngle());
-
-        Platform.runLater(() -> {
-            txtSpeed.setText(boat.getSpeed() + " nd");
-            txtCap.setText(boat.getAngle() + " °");
-        });
+    public void exitGame() {
+        game.getT().cancel();
+        game.getT().purge();
+        Platform.exit();
     }
 }

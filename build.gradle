@@ -7,7 +7,7 @@ plugins {
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'regates.mvp.vue.BoardView'
+mainClassName = 'regates.mvp.vue.MenuView'
 
 repositories {
     mavenCentral()
