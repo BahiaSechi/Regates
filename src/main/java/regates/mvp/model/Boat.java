@@ -1,20 +1,25 @@
 package regates.mvp.model;
 
+import javafx.beans.property.IntegerProperty;
 import lombok.Getter;
 import lombok.Setter;
 import regates.mvp.model.utils.FileReader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class Boat {
-    private static String[] boatSpeeds;
-    private float degree;
-    private float speed;
-    private Coordinate position;
 
-    public Boat(float degree, float speed, Coordinate position) {
-        this.degree = degree;
-        this.speed = speed;
+    private static String[] boatSpeeds;
+    private double speed;
+    private IntegerProperty angle;
+    private Coordinate position;
+    private List<BoatObserver> boatObservers = new ArrayList<>();
+
+    public Boat(IntegerProperty degree, Coordinate position) {
+        this.angle = degree;
         this.position = position;
         Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
@@ -31,16 +36,10 @@ public class Boat {
     /**
      * Determine the speed of the boat according to wind strength and angle
      * @param windStrength Wind Strength
-     * @param angle Angle between boat and wind
      * @return Boat Speed
-     * @throws Exception If angle is invalid
      */
-    public float determinateSpeed(int windStrength, int angle) throws Exception {
-        if (angle < 1 || angle > 180) {
-            throw new Exception("Invalid angle");
-        }
-
-        String[] speedByAngle = Boat.boatSpeeds[angle].split(" "); // Extract the line matching the angle
+    public double determinateSpeed(int windStrength) {
+        String[] speedByAngle = Boat.boatSpeeds[Math.abs(this.angle.getValue() % 180)].split(" "); // Extract the line matching the angle
         String[] strengths = Boat.boatSpeeds[0].split(" ");
         int index;
         for (index = 1; index < strengths.length; index++) {
@@ -52,4 +51,52 @@ public class Boat {
         return Float.parseFloat(speedByAngle[index]);
     }
 
+    /**
+     * Move the boat according to its angle and speed
+     * @param windStrength Wind Strength
+     */
+    public void move(int windStrength) {
+        try {
+            this.speed = determinateSpeed(windStrength);
+            double a = angle.getValue() - 90;
+            double adj = speed * Math.cos(Math.toRadians(a));
+            double opp = speed * Math.sin(Math.toRadians(a));
+            this.position = new Coordinate(this.position.getX() + adj, this.position.getY() + opp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Rotate the boat
+     * @param shift rotation shift in degrees
+     */
+    public void rotate(int shift) {
+        this.angle.setValue(shift + angle.getValue());
+    }
+
+    /**
+     * Add an Observer for the boat
+     * @param bo New observer
+     */
+    public void addObserver(BoatObserver bo){
+        this.boatObservers.add(bo);
+    }
+
+    /**
+     * Remove an Observer
+     * @param bo observer
+     */
+    public void removeObserver(BoatObserver bo){
+        this.boatObservers.remove(bo);
+    }
+
+    /**
+     * Send boat data to every Observer
+     */
+    public void notifyObservers() {
+        for (BoatObserver observer : boatObservers) {
+            observer.update(this);
+        }
+    }
 }
