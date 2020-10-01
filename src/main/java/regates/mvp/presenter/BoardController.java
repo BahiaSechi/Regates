@@ -1,6 +1,8 @@
 package regates.mvp.presenter;
 
+import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -8,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import lombok.Getter;
 import regates.mvp.model.Boat;
 import regates.mvp.model.BoatObserver;
 import regates.mvp.model.Game;
@@ -17,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
     @FXML
+    @Getter
     ImageView regate;
     @FXML
     Label txtCap;
@@ -66,18 +70,20 @@ public class BoardController implements Initializable, BoatObserver {
     public void initialize(URL location, ResourceBundle resources) {
         this.game = new Game();
         this.game.setObserver(this);
+        regate.setRotate(90);
+        game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
+            regate.setRotate(newValue.doubleValue() + 90);
+        });
     }
 
     @Override
     public void update(Boat boat) {
         regate.setLayoutX(boat.getPosition().getX());
         regate.setLayoutY(boat.getPosition().getY());
-        regate.setRotate(boat.getAngle());
-        imgWheel.setRotate(boat.getAngle());
 
         Platform.runLater(() -> {
             txtSpeed.setText(boat.getSpeed() + " nd");
-            txtCap.setText(boat.getAngle() + " °");
+            txtCap.setText(boat.getAngle().getValue() + " °");
         });
     }
 }
