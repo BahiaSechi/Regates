@@ -1,5 +1,7 @@
 package regates.mvp.model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,29 +12,29 @@ public class Game {
     private Boat boat;
 
     public Game() {
-
+        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
         tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
-                boat.setPosition(new Coordinate(boat.getPosition().getX() + 1, boat.getPosition().getY()));
+                boat.move(4);
+                boat.notifyObservers();
             }
         };
         t = new Timer();
-        t.scheduleAtFixedRate(tt, 0, 1000);
+        t.scheduleAtFixedRate(tt, 0, 100);
+    }
+
+    public Boat getBoat() {
+        return this.boat;
+    }
+
+    public void setObserver(BoatObserver bo) {
+        this.boat.addObserver(bo);
     }
 
 
     public void launchGame(String s) {
 
     }
-
-    public static void main(String[] args) {
-        Game g = new Game();
-        for (; ; ) {
-
-        }
-    }
-
-
 }
