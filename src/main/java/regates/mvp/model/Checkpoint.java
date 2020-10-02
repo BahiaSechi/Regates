@@ -18,5 +18,5 @@ public class Checkpoint {
     private double radius;
 
     @Setter
-    private boolean validate;
+    private boolean valid;
 }

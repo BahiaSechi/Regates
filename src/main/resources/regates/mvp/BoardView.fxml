@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" prefHeight="951.0" prefWidth="1167.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
+<GridPane alignment="center" hgap="10" prefHeight="951.0" prefWidth="1167.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.212" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -40,7 +41,7 @@
             </MenuBar>
          </top>
          <center>
-            <AnchorPane prefHeight="787.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="board" prefHeight="787.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="648.0" fitWidth="1312.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,6 +54,7 @@
                         <Image url="@img/buoy.png" />
                      </image>
                   </ImageView>
+                  <Label fx:id="labelCheckpoint" contentDisplay="CENTER" layoutX="524.0" layoutY="30.0" opacity="0.34" text="1" textAlignment="CENTER" />
                   <Circle id="buoy_2" fill="#1f93ff00" layoutX="145.0" layoutY="310.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
                   <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="110.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,12 +77,14 @@
                         <Image url="@img/coast.png" />
                      </image>
                   </ImageView>
+                  <Circle id="buoy_1" fx:id="nextCheckpoint" fill="#1f93ff00" layoutX="528.0" layoutY="38.0" radius="37.0" stroke="#ff9000" strokeLineCap="ROUND" strokeWidth="2.0">
+                     <effect>
+                        <BoxBlur height="10.0" width="10.0" />
+                     </effect>
+                  </Circle>
                </children>
             </AnchorPane>
          </center>
-         <left>
-            <AnchorPane BorderPane.alignment="CENTER" />
-         </left>
          <bottom>
             <AnchorPane prefHeight="232.0" prefWidth="1155.0" BorderPane.alignment="CENTER">
                <children>

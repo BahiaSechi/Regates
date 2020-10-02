@@ -22,7 +22,7 @@ public class Game {
             }
         };
         t = new Timer();
-        t.scheduleAtFixedRate(tt, 0, 100);
+        t.scheduleAtFixedRate(tt, 0, 54);
     }
 
     public Boat getBoat() {

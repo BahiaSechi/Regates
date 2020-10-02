@@ -1,14 +1,16 @@
 package regates.mvp.model;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Board {
 
-    private Board board;
+    @Getter
+    private ArrayList<Checkpoint> checkpoints = new ArrayList<>();
+
+    private static Board board;
 
     private int width; // fixé ?
 
@@ -20,21 +22,28 @@ public class Board {
 
     private Date timestamp;
 
-    public Board getInstance(){
-        if(board == null)
+    private Board() {
+        checkpoints.add(new Checkpoint(0, new Coordinate(200, 15), 30));
+        checkpoints.add(new Checkpoint(1, new Coordinate(50, 50), 3));
+        checkpoints.add(new Checkpoint(2, new Coordinate(50, 50), 3));
+
+    }
+
+    public static Board getInstance() {
+        if (board == null)
             board = new Board();
         return board;
     }
 
-    public boolean start(){
+    public boolean start() {
         return true;
     }
 
-    public boolean testEnd(){
+    public boolean testEnd() {
         return true;
     }
 
-    public Score endGame(){
+    public Score endGame() {
         return new Score(0, new Date(), "Maxence");
     }
 

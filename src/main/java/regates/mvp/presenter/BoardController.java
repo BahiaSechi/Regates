@@ -8,12 +8,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import lombok.Getter;
-import regates.mvp.model.Boat;
-import regates.mvp.model.BoatObserver;
-import regates.mvp.model.Game;
+import regates.mvp.model.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
@@ -30,6 +31,16 @@ public class BoardController implements Initializable, BoatObserver {
     Label txtWind;
     @FXML
     ImageView imgWheel;
+
+    @FXML
+    AnchorPane board;
+
+    @FXML
+    Label labelCheckpoint;
+
+    @FXML
+    Circle nextCheckpoint;
+
 
     private Game game;
     private Scene scene;
@@ -79,7 +90,22 @@ public class BoardController implements Initializable, BoatObserver {
         regate.setLayoutX(boat.getPosition().getX());
         regate.setLayoutY(boat.getPosition().getY());
 
+        int i;
+        ArrayList<Checkpoint> checkpoints = Board.getInstance().getCheckpoints();
+        for (i = 0; i < checkpoints.size() && checkpoints.get(i).isValid(); i++) {
+        }
+
+        Checkpoint next = checkpoints.get(i);
+
+
+
         Platform.runLater(() -> {
+            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius()*0.9);
+            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius()*0.9);
+            AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
+            AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
+            labelCheckpoint.setText(String.valueOf(next.getOrder()));
+
             txtSpeed.setText(boat.getSpeed() + " nd");
             txtCap.setText(boat.getAngle().getValue() + " °");
         });
