@@ -1,6 +1,7 @@
 package regates.mvp.presenter;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -25,16 +26,9 @@ import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
     @FXML
-    @Getter
     ImageView regate;
     @FXML
-    Label txtCap;
-    @FXML
-    Label txtStrength;
-    @FXML
-    Label txtSpeed;
-    @FXML
-    Label txtWind;
+    Label txtCap, txtStrength, txtSpeed, txtWind;
     @FXML
     ImageView imgWheel;
     @FXML
@@ -133,5 +127,34 @@ public class BoardController implements Initializable, BoatObserver {
                 }
             }
         });
+    }
+
+    // MENU FUNCTIONS
+
+    /**
+     * Handle menu about.
+     * @param actionEvent
+     */
+    public void handleAbout(javafx.event.ActionEvent actionEvent) {
+        Alert about = new Alert(Alert.AlertType.INFORMATION);
+        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
+                "Authors : ALOUACHE Loan & BURON Manfred \n" +
+                "FAVE Anthony & HESLOUIN Alexis \n" +
+                "LE MAZIER Elise & MORIN Maxence \n" +
+                "RICH Mohamed & SECHI Bahia \n" +
+                "Date : September 2020 \n" +
+                "Version : 1.0");
+        about.setTitle("Regate - About");
+        about.show();
+    }
+
+    public void handleExit(ActionEvent actionEvent) {
+        exitGame();
+    }
+
+    public void exitGame() {
+        game.getT().cancel();
+        game.getT().purge();
+        Platform.exit();
     }
 }
