@@ -6,7 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="983.0" prefWidth="1310.0" style="-fx-background-color: #d5d5d5;" stylesheets="@MenuView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.MenuController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="983.0" prefWidth="1310.0"
+      style="-fx-background-color: #d5d5d5;" stylesheets="@MenuView.css" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.MenuController">
    <children>
       <ImageView fitHeight="416.0" fitWidth="612.0" pickOnBounds="true" preserveRatio="true">
          <VBox.margin>
