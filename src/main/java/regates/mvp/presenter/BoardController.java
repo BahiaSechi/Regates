@@ -1,5 +1,6 @@
 package regates.mvp.presenter;
 
+import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
     @FXML
+    @Getter
     ImageView regate;
     @FXML
     Label txtCap, txtStrength, txtSpeed, txtWind;
