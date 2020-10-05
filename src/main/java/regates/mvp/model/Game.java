@@ -2,6 +2,7 @@ package regates.mvp.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.time.Clock;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,6 +11,14 @@ public class Game {
     private TimerTask tt;
     private String configurationFilename;
     private Boat boat;
+
+    //Ajouté par MOMO dev de l'espace!
+    private Clock clock = Clock.systemDefaultZone();
+    private long tStart = 0;
+    private long tFinish = 0;
+    private long tLap = 0;
+
+
 
     public Game() {
         this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
@@ -35,6 +44,14 @@ public class Game {
 
 
     public void launchGame(String s) {
+        // Cette partie permet de calculer le temps du lap
+        // Ajouté au lancement de la partie.
+        tStart = clock.millis();
 
+        //Ajouté juste apres la fin de la partie
+        tFinish = clock.millis();
+
+        //Le Score en seconde est alors :
+        tLap = (tStart - tFinish) / 1000;
     }
 }

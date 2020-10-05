@@ -15,4 +15,6 @@ public class Score {
     private Date date;
     private String player;
 
+    public Score() {
+    }
 }
