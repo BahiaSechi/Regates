@@ -54,5 +54,19 @@ public class MenuController {
     }
 
     public void displayLeader(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/LeaderView.fxml"));
+            Parent root3 = (Parent) fxmlLoader.load();
+            Scene scene = new Scene(root3, 1310, 983);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Regate game");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.requestFocus();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

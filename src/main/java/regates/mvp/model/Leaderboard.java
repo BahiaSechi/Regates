@@ -28,10 +28,7 @@ public class Leaderboard {
         String[] buffer;
         Scanner scanner = null;
         try {
-            String s = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(path)).getPath();
-            File f = new File(s);
-            scanner = new Scanner(f);
-
+            scanner = new Scanner(new File(getClass().getResource("/regates/mvp/scoresData.txt").getPath()));
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
@@ -43,7 +40,6 @@ public class Leaderboard {
         } finally {
             scanner.close();
         }
-
     }
 
     public void sortByDate() {
