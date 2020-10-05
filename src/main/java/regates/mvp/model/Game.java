@@ -1,9 +1,12 @@
 package regates.mvp.model;
 
+import lombok.Getter;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
+    @Getter
     private Timer t;
     private TimerTask tt;
     private String configurationFilename;
