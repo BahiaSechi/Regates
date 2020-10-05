@@ -12,22 +12,30 @@ import java.util.Date;
 @Getter
 public class Score {
 
+    private String player;
     private float value;
     private Date date;
-    private String player;
+
 
 
     public static Comparator<Score> ComparatorDate = new Comparator<Score>() {
         @Override
         public int compare(Score o1, Score o2) {
-            return o1.getDate().compareTo(o2.getDate());
+            return o2.getDate().compareTo(o1.getDate());
         }
     };
 
-    public static Comparator<Score> ComparatorScore = new Comparator<Score>() {
+    public static Comparator<Score> ComparatorScore = new Comparator<>() {
         @Override
         public int compare(Score o1, Score o2) {
-            return Float.compare(o1.getValue(), o2.getValue());
+            return Float.compare(o2.getValue(), o1.getValue());
+        }
+    };
+
+    public static Comparator<Score> ComparatorPlayer = new Comparator<Score>() {
+        @Override
+        public int compare(Score o1, Score o2) {
+            return o1.getPlayer().compareTo(o2.getPlayer());
         }
     };
 

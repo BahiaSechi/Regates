@@ -35,7 +35,7 @@ public class Board {
     }
 
     public Score endGame(){
-        return new Score(0, new Date(), "Maxence");
+        return new Score("Maxence", 0, new Date());
     }
 
 }
