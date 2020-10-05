@@ -24,8 +24,8 @@ public class Board {
 
     private Board() {
         checkpoints.add(new Checkpoint(0, new Coordinate(200, 15), 30));
-        checkpoints.add(new Checkpoint(1, new Coordinate(50, 50), 3));
-        checkpoints.add(new Checkpoint(2, new Coordinate(50, 50), 3));
+        checkpoints.add(new Checkpoint(1, new Coordinate(50, 50), 50));
+        checkpoints.add(new Checkpoint(2, new Coordinate(500, 300), 30));
 
     }
 

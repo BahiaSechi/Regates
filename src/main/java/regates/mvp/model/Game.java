@@ -12,13 +12,14 @@ public class Game {
     private Boat boat;
 
     public Game() {
-        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
+        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(500, 300));
         tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
                 boat.notifyObservers();
+
             }
         };
         t = new Timer();
