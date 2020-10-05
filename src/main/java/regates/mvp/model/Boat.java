@@ -15,12 +15,14 @@ public class Boat {
     private static String[] boatSpeeds;
     private double speed;
     private IntegerProperty angle;
-    private Coordinate position;
     private List<BoatObserver> boatObservers = new ArrayList<>();
+    private Border borders;
 
     public Boat(IntegerProperty degree, Coordinate position) {
         this.angle = degree;
-        this.position = position;
+        this.borders = new Border();
+        this.borders.setBarycentre(position);
+        this.borders.translateBorders();
         Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
 
@@ -30,7 +32,7 @@ public class Boat {
      * @return true if colliding
      */
     public boolean isCollision(Coordinate a) {
-        return a.equals(this.position);
+        return false;
     }
 
     /**
@@ -55,13 +57,15 @@ public class Boat {
      * Move the boat according to its angle and speed
      * @param windStrength Wind Strength
      */
-    public void move(int windStrength) {
+    public synchronized void move(int windStrength) {
         try {
+            this.borders.resetTranslation();
             this.speed = determinateSpeed(windStrength);
             double a = angle.getValue() - 90;
             double adj = speed * Math.cos(Math.toRadians(a));
             double opp = speed * Math.sin(Math.toRadians(a));
-            this.position = new Coordinate(this.position.getX() + adj, this.position.getY() + opp);
+            this.borders.barycentre = new Coordinate(this.borders.barycentre.getX() + adj, this.borders.barycentre.getY() + opp);
+            this.borders.translateBorders();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,8 +75,9 @@ public class Boat {
      * Rotate the boat
      * @param shift rotation shift in degrees
      */
-    public void rotate(int shift) {
+    public synchronized void rotate(int shift) {
         this.angle.setValue(shift + angle.getValue());
+        this.borders.rotate(this.borders.getBarycentre(), -shift);
     }
 
     /**
@@ -98,5 +103,9 @@ public class Boat {
         for (BoatObserver observer : boatObservers) {
             observer.update(this);
         }
+    }
+
+    public Coordinate getPosition() {
+        return this.borders.getBarycentre();
     }
 }

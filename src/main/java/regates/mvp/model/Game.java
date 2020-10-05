@@ -13,6 +13,9 @@ public class Game {
 
     public Game() {
         this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
+    }
+
+    public void start() {
         tt = new TimerTask() {
             @Override
             public void run() {
