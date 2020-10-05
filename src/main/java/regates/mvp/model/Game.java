@@ -12,10 +12,7 @@ public class Game {
     private Boat boat;
 
     public Game() {
-        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
-    }
-
-    public void start() {
+        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(500, 300));
         tt = new TimerTask() {
             @Override
             public void run() {

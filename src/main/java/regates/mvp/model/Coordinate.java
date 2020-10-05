@@ -1,15 +1,12 @@
 package regates.mvp.model;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Coordinate {
+
+public class Coordinate   {
     private double x;
     private double y;
 

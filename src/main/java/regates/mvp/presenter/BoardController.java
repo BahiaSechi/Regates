@@ -23,7 +23,7 @@ import regates.mvp.model.Game;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
@@ -40,6 +40,7 @@ public class BoardController implements Initializable, BoatObserver {
     Label txtWind;
     @FXML
     ImageView imgWheel;
+
     @FXML
     AnchorPane gameBoard;
 
@@ -129,24 +130,31 @@ public class BoardController implements Initializable, BoatObserver {
         regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgshift().getX());
         regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgshift().getY());
 
-        int i;
         ArrayList<Checkpoint> checkpoints = Board.getInstance().getCheckpoints();
-        for (i = 0; i < checkpoints.size() && checkpoints.get(i).isValid(); i++) {
+        int i = 0;
+        while (i < checkpoints.size() && checkpoints.get(i).isValid()) {
+            i++;
         }
 
-        Checkpoint next = checkpoints.get(i);
+        if (i < checkpoints.size()) {
 
+            Checkpoint next = checkpoints.get(i);
 
+            double distance = Math.sqrt(Math.pow(boat.getPosition().getX() + regate.getBoundsInParent().getWidth() / 2 - next.getPosition().getX(), 2) + Math.pow(boat.getPosition().getY() + regate.getBoundsInParent().getHeight() / 2 - next.getPosition().getY(), 2));
+            System.out.println(next.getPosition() + " " + boat.getPosition() + " " + Math.round(distance));
+            if (distance <= next.getRadius()) {
+                next.setValid(true);
+            }
+            System.out.println(next.isValid());
 
         Platform.runLater(() -> {
-            txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
             AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius()*0.9);
             AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius()*0.9);
             AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
             AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
             labelCheckpoint.setText(String.valueOf(next.getOrder()));
-
-            txtSpeed.setText(boat.getSpeed() + " nd");
+            nextCheckpoint.setRadius(next.getRadius());
+            txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
             txtCap.setText(boat.getAngle().getValue() + " °");
 
             if (true) {
@@ -161,5 +169,8 @@ public class BoardController implements Initializable, BoatObserver {
                 }
             }
         });
+        }else{
+            System.out.println("Fin du jeu");
+        }
     }
 }
