@@ -1,5 +1,6 @@
 package regates.mvp.model;
 
+import javafx.beans.property.IntegerProperty;
 import lombok.Getter;
 import lombok.Setter;
 import regates.mvp.model.utils.FileReader;
@@ -12,25 +13,19 @@ import java.util.List;
 public class Boat {
 
     private static String[] boatSpeeds;
-    private int angle;
-    private double degree;
     private double speed;
+    private IntegerProperty angle;
     private Coordinate position;
     private List<BoatObserver> boatObservers = new ArrayList<>();
 
-    /**
-     *
-     * @param degree
-     * @param position
-     */
-    public Boat(int degree, Coordinate position) {
+    public Boat(IntegerProperty degree, Coordinate position) {
         this.angle = degree;
         this.position = position;
         Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
 
     /**
-     * Return if the boat is colliding or not.
+     * Return if the boat is colliding or not
      * @param a Coordinates of another entity
      * @return true if colliding
      */
@@ -44,7 +39,7 @@ public class Boat {
      * @return Boat Speed
      */
     public double determinateSpeed(int windStrength) {
-        String[] speedByAngle = Boat.boatSpeeds[Math.abs(this.angle % 180)].split(" "); // Extract the line matching the angle
+        String[] speedByAngle = Boat.boatSpeeds[Math.abs(this.angle.getValue() % 180)].split(" "); // Extract the line matching the angle
         String[] strengths = Boat.boatSpeeds[0].split(" ");
         int index;
         for (index = 1; index < strengths.length; index++) {
@@ -57,42 +52,48 @@ public class Boat {
     }
 
     /**
-     *
-     * @param windStrength
+     * Move the boat according to its angle and speed
+     * @param windStrength Wind Strength
      */
     public void move(int windStrength) {
         try {
-            double speed = 3; // TODO use determinateSpeed
-            int adj = (int)Math.floor(speed * Math.cos(this.angle));
-            int opp = (int)Math.floor(speed * Math.sin(this.angle));
-            this.position = new Coordinate(this.position.getX() - adj, this.position.getY() - opp);
+            this.speed = determinateSpeed(windStrength);
+            double a = angle.getValue() - 90;
+            double adj = speed * Math.cos(Math.toRadians(a));
+            double opp = speed * Math.sin(Math.toRadians(a));
+            this.position = new Coordinate(this.position.getX() + adj, this.position.getY() + opp);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *
-     * @param shift
+     * Rotate the boat
+     * @param shift rotation shift in degrees
      */
     public void rotate(int shift) {
-        if (shift == -1 && this.angle - 1 == 0) {
-            this.angle = 360;
-        } else if (shift == 1 && this.angle + 1 == 361) {
-            this.angle = 1;
-        } else {
-            this.angle += shift;
-        }
+        this.angle.setValue(shift + angle.getValue());
     }
 
+    /**
+     * Add an Observer for the boat
+     * @param bo New observer
+     */
     public void addObserver(BoatObserver bo){
         this.boatObservers.add(bo);
     }
 
+    /**
+     * Remove an Observer
+     * @param bo observer
+     */
     public void removeObserver(BoatObserver bo){
         this.boatObservers.remove(bo);
     }
 
+    /**
+     * Send boat data to every Observer
+     */
     public void notifyObservers() {
         for (BoatObserver observer : boatObservers) {
             observer.update(this);

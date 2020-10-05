@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import lombok.Getter;
 import regates.mvp.model.Boat;
 import regates.mvp.model.BoatObserver;
 import regates.mvp.model.Game;
@@ -27,10 +28,7 @@ public class BoardController implements Initializable, BoatObserver {
     private Game game;
     private Scene scene;
 
-    /**
-     *
-     * @param scene
-     */
+
     public void setScene(Scene scene) {
         this.scene = scene;
         this.scene.setOnKeyPressed(event -> {
@@ -42,25 +40,21 @@ public class BoardController implements Initializable, BoatObserver {
         });
     }
 
-    /**
-     *
-     * @param location
-     * @param resources
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.game = new Game();
         this.game.setObserver(this);
+        game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
+            regate.setRotate(newValue.doubleValue());
+            imgWheel.setRotate(newValue.doubleValue());
+        });
     }
 
-    /**
-     *
-     * @param boat
-     */
     @Override
     public void update(Boat boat) {
         regate.setLayoutX(boat.getPosition().getX());
         regate.setLayoutY(boat.getPosition().getY());
+
         regate.setRotate(boat.getAngle());
         imgWheel.setRotate(boat.getAngle());
 

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Coordinate   {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     @Override
     public String toString() {

@@ -1,20 +1,18 @@
 package regates.mvp.model;
 
-import lombok.Getter;
+import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Getter
 public class Game {
-    @Getter
     private Timer t;
     private TimerTask tt;
     private String configurationFilename;
     private Boat boat;
 
     public Game() {
-        this.boat = new Boat(1, new Coordinate(200, 200));
+        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
         tt = new TimerTask() {
             @Override
             public void run() {
