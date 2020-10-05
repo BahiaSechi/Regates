@@ -44,23 +44,6 @@ public class BoardController implements Initializable, BoatObserver {
     private final Circle c = new Circle();
     // Debug display
 
-    /**
-     * Handle menu about.
-     *
-     */
-    public void handleAbout() {
-        Alert about = new Alert(Alert.AlertType.INFORMATION);
-        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
-                "Authors : ALOUACHE Loan & BURON Manfred \n" +
-                "FAVE Anthony & HESLOUIN Alexis \n" +
-                "LE MAZIER Elise & MORIN Maxence \n" +
-                "RICH Mohamed & SECHI Bahia \n" +
-                "Date : September 2020 \n" +
-                "Version : 1.0");
-        about.setTitle("Regate - About");
-        about.show();
-    }
-
 
     public void setScene(Scene scene) {
         this.scene = scene;
@@ -135,9 +118,9 @@ public class BoardController implements Initializable, BoatObserver {
 
     /**
      * Handle menu about.
-     * @param actionEvent
+     *
      */
-    public void handleAbout(javafx.event.ActionEvent actionEvent) {
+    public void handleAbout() {
         Alert about = new Alert(Alert.AlertType.INFORMATION);
         about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
                 "Authors : ALOUACHE Loan & BURON Manfred \n" +
