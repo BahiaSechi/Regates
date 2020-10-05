@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.time.Clock;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 
 public class Game {
     private Timer t;
@@ -13,11 +17,15 @@ public class Game {
     private Boat boat;
 
     //Ajouté par MOMO dev de l'espace!
+    //Pour score
     private Clock clock = Clock.systemDefaultZone();
     private long tStart = 0;
     private long tFinish = 0;
     private long tLap = 0;
-
+    //Pour popup
+    final JFrame parent = new JFrame();
+    JButton button = new JButton();
+    private String playerName;
 
 
     public Game() {
@@ -44,14 +52,13 @@ public class Game {
 
 
     public void launchGame(String s) {
-        // Cette partie permet de calculer le temps du lap
-        // Ajouté au lancement de la partie.
-        tStart = clock.millis();
-
-        //Ajouté juste apres la fin de la partie
-        tFinish = clock.millis();
-
-        //Le Score en seconde est alors :
-        tLap = (tStart - tFinish) / 1000;
     }
+
+    public String capturePlayerName() {
+        //This functio reat a pop-up to capture the player's name and return it.
+        playerName = JOptionPane.showInputDialog(parent,
+                        "What is your name?", null);
+        return playerName;
+    }
+
 }
