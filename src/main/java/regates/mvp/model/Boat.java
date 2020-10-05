@@ -66,6 +66,7 @@ public class Boat {
             double opp = speed * Math.sin(Math.toRadians(a));
             this.borders.barycentre = new Coordinate(this.borders.barycentre.getX() + adj, this.borders.barycentre.getY() + opp);
             this.borders.translateBorders();
+            System.out.println(this.borders.getBarycentre());
         } catch (Exception e) {
             e.printStackTrace();
         }

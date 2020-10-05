@@ -22,10 +22,25 @@ public class Game {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
                 boat.notifyObservers();
+                if(testCollision()){
+                    System.exit(11);
+                }
+
             }
         };
         t = new Timer();
         t.scheduleAtFixedRate(tt, 0, 54);
+    }
+
+    public boolean testCollision() {
+        for (Coordinate c : boat.getBorders().getPoints()) {
+            for (Buoy b : Board.getInstance().getListBuoy()) {
+                if (Coordinate.distance(c, b.getPosition()) <= b.getRadius()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Boat getBoat() {
