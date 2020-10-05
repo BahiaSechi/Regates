@@ -18,6 +18,11 @@ public class Boat {
     private Coordinate position;
     private List<BoatObserver> boatObservers = new ArrayList<>();
 
+    /**
+     *
+     * @param degree
+     * @param position
+     */
     public Boat(int degree, Coordinate position) {
         this.angle = degree;
         this.position = position;
@@ -25,7 +30,7 @@ public class Boat {
     }
 
     /**
-     * Return if the boat is colliding or not
+     * Return if the boat is colliding or not.
      * @param a Coordinates of another entity
      * @return true if colliding
      */
@@ -51,6 +56,10 @@ public class Boat {
         return Float.parseFloat(speedByAngle[index]);
     }
 
+    /**
+     *
+     * @param windStrength
+     */
     public void move(int windStrength) {
         try {
             double speed = 3; // TODO use determinateSpeed
@@ -62,6 +71,10 @@ public class Boat {
         }
     }
 
+    /**
+     *
+     * @param shift
+     */
     public void rotate(int shift) {
         if (shift == -1 && this.angle - 1 == 0) {
             this.angle = 360;

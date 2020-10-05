@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@Getter
 public class Game {
     @Getter
     private Timer t;
@@ -23,7 +24,7 @@ public class Game {
             }
         };
         t = new Timer();
-        t.scheduleAtFixedRate(tt, 0, 1000);
+        t.scheduleAtFixedRate(tt, 0, 100);
     }
 
     public Boat getBoat() {

@@ -39,9 +39,7 @@ public class MenuController {
             Parent root1 = (Parent) fxmlLoader.load();
             BoardController bc = fxmlLoader.getController();
             Scene scene = new Scene(root1, 1310, 983);
-
             bc.setScene(scene);
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Regate game");
