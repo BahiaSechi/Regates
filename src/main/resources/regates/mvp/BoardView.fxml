@@ -42,7 +42,7 @@
             </MenuBar>
          </top>
          <center>
-            <AnchorPane prefHeight="669.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
+            <AnchorPane  fx:id="gameBoard" prefHeight="669.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="709.0" fitWidth="1310.0" pickOnBounds="true">
                      <image>
