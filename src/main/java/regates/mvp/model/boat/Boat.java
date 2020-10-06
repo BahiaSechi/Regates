@@ -41,6 +41,11 @@ public class Boat implements BoatObservable {
      * @return true if colliding
      */
     public boolean isCollision(Coordinate a) {
+        for (Coordinate c : this.getBorders().getPoints()){
+            if(c.equals(a)){
+                return true;
+            }
+        }
         return false;
     }
 
