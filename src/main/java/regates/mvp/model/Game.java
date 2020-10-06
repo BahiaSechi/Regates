@@ -23,7 +23,6 @@ public class Game {
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
-                boat.notifyObservers();
             }
         };
         t = new Timer();
@@ -38,8 +37,4 @@ public class Game {
         this.boat.addObserver(bo);
     }
 
-
-    public void launchGame(String s) {
-
-    }
 }
