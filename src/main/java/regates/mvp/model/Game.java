@@ -1,6 +1,8 @@
 package regates.mvp.model;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Alert;
 import lombok.Getter;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
@@ -27,14 +29,30 @@ public class Game {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
                 if (testCollision()) {
-                    System.exit(11);
-                }
-                if(testCheckpoint(order)){
-                    order++;
-                    if(order==Board.getInstance().getCheckpoints().size()){
+                    Platform.runLater(() -> {
 
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("End Game");
+                        alert.setHeaderText(null);
+                        alert.setContentText("crash");
+
+                        alert.showAndWait();
+                        //TODO Appeler la méthode de fin de jeu
+                        //System.exit(11);
+                    });
+                }
+                if (testCheckpoint(order)) {
+                    order++;
+                    if (order == Board.getInstance().getCheckpoints().size()) {
+                        // TODO  appel methode momo
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("End Game");
+                        alert.setHeaderText(null);
+                        alert.setContentText("congratulation end game with success");
+
+                        alert.showAndWait();
                     }
-                    // TODO gérer le cas où order > taille arraylist --> victoire
+
                 }
             }
         };
@@ -55,14 +73,15 @@ public class Game {
 
     public boolean testCheckpoint(int order) {
         for (Coordinate c : boat.getBorders().getPoints()) {
-                if (Coordinate.distance(c, Board.getInstance().getCheckpoints().get(order).getPosition()) <= Board.getInstance().getCheckpoints().get(order).getRadius()) {
-                    return true;
-                }
+            if (Coordinate.distance(c, Board.getInstance().getCheckpoints().get(order).getPosition()) <= Board.getInstance().getCheckpoints().get(order).getRadius()) {
+                return true;
+            }
 
         }
         return false;
     }
-    public void moveCheckPoint(){
+
+    public void moveCheckPoint() {
 
     }
 
