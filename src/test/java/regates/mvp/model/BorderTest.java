@@ -12,17 +12,17 @@ public class BorderTest {
     public void testGeneratePoints() {
         Border b = new Border();
         b.setBarycentre(new Coordinate(0, 0));
-        b.generateBordersForImage(new Coordinate(0, 0), new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
-        Assert.assertEquals(b.getPoints().size(), 4761);
-        Assert.assertEquals(b.getImgshift().getX(), 24, 1);
-        Assert.assertEquals(b.getImgshift().getY(), 28, 1);
+        b.generateBordersForImage(new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
+        Assert.assertEquals(4761, b.getPoints().size());
+        Assert.assertEquals(24, b.getImgShift().getX(), 1.);
+        Assert.assertEquals(28, b.getImgShift().getY(), 1.);
     }
 
     @Test
     public void testRotate() {
         Border b = new Border();
         b.setBarycentre(new Coordinate(0, 0));
-        b.generateBordersForImage(new Coordinate(0, 0), new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
+        b.generateBordersForImage(new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
         b.rotate(180);
         Coordinate expected = new Coordinate(16, 14);
         Assert.assertEquals(expected.getY(), b.getPoints().get(0).getY(), 1);

@@ -14,7 +14,7 @@ import java.util.*;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Leaderboard {
 
-    private List<Score> scores = new ArrayList<>();
+    private final List<Score> scores = new ArrayList<>();
     private static Leaderboard instance;
 
     public static Leaderboard getInstance() {
@@ -23,13 +23,12 @@ public class Leaderboard {
         return instance;
     }
 
-    //"/regates/mvp/scoresData.txt"
     public void readScore(String path) {
         String[] buffer;
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new File(getClass().getResource("/regates/mvp/scoresData.txt").getPath()));
-            while(scanner.hasNextLine()) {
+        try (Scanner scanner = new Scanner(
+                new File(Objects.requireNonNull(
+                        Thread.currentThread().getContextClassLoader().getResource(path)).getPath()))) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -37,20 +36,18 @@ public class Leaderboard {
             }
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
-        } finally {
-            scanner.close();
         }
     }
 
     public void sortByDate() {
-        Collections.sort(scores, Score.ComparatorDate);
+        scores.sort(Score.ComparatorDate);
     }
 
     public void sortByScore() {
-        Collections.sort(scores, Score.ComparatorScore);
+        scores.sort(Score.ComparatorScore);
     }
 
     public void sortByName() {
-        Collections.sort(scores, Score.ComparatorPlayer);
+        scores.sort(Score.ComparatorPlayer);
     }
 }

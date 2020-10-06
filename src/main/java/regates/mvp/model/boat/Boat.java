@@ -1,15 +1,17 @@
-package regates.mvp.model;
+package regates.mvp.model.boat;
 
 import javafx.beans.property.IntegerProperty;
 import lombok.Getter;
 import lombok.Setter;
+import regates.mvp.model.Border;
+import regates.mvp.model.Coordinate;
 import regates.mvp.model.utils.FileReader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Boat {
+public class Boat implements BoatObservable {
 
     @Setter
     private static String[] boatSpeeds;
@@ -19,7 +21,7 @@ public class Boat {
     @Setter
     private IntegerProperty angle;
 
-    private List<BoatObserver> boatObservers = new ArrayList<>();
+    private final List<BoatObserver> boatObservers = new ArrayList<>();
 
     @Setter
     private Border borders;
@@ -39,6 +41,11 @@ public class Boat {
      * @return true if colliding
      */
     public boolean isCollision(Coordinate a) {
+        for (Coordinate c : this.getBorders().getPoints()){
+            if(c.equals(a)){
+                return true;
+            }
+        }
         return false;
     }
 
