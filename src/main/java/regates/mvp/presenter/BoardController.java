@@ -1,8 +1,6 @@
 package regates.mvp.presenter;
 
-import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -12,14 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import regates.mvp.model.*;
-import regates.mvp.model.Boat;
-import regates.mvp.model.BoatObserver;
+import regates.mvp.model.boat.Boat;
+import regates.mvp.model.boat.BoatObserver;
 import regates.mvp.model.Coordinate;
 import regates.mvp.model.Game;
 
@@ -42,7 +38,6 @@ public class BoardController implements Initializable, BoatObserver {
     AnchorPane gameBoard;
 
 
-
     @FXML
     Label labelCheckpoint;
 
@@ -51,7 +46,6 @@ public class BoardController implements Initializable, BoatObserver {
 
 
     private Game game;
-    private Scene scene;
 
     // Debug display
     private List<Rectangle> r;
@@ -60,8 +54,7 @@ public class BoardController implements Initializable, BoatObserver {
 
 
     public void setScene(Scene scene) {
-        this.scene = scene;
-        this.scene.setOnKeyPressed(event -> {
+        scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {
                 game.getBoat().rotate(-1);
             } else if (event.getCode() == KeyCode.RIGHT) {
@@ -107,29 +100,13 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgshift().getX());
-        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgshift().getY());
+        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
+        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
 
-        ArrayList<Checkpoint> checkpoints = Board.getInstance().getCheckpoints();
-        int i = 0;
-        while (i < checkpoints.size() && checkpoints.get(i).isValid()) {
-            i++;
-        }
-
-        if (i < checkpoints.size()) {
-
-            Checkpoint next = checkpoints.get(i);
-
-            double distance = Math.sqrt(Math.pow(boat.getPosition().getX() + regate.getBoundsInParent().getWidth() / 2 - next.getPosition().getX(), 2) + Math.pow(boat.getPosition().getY() + regate.getBoundsInParent().getHeight() / 2 - next.getPosition().getY(), 2));
-            System.out.println(next.getPosition() + " " + boat.getPosition() + " " + Math.round(distance));
-            if (distance <= next.getRadius()) {
-                next.setValid(true);
-            }
-            System.out.println(next.isValid());
-
+        Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
         Platform.runLater(() -> {
-            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius()*0.9);
-            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius()*0.9);
+            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
+            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
             AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
             labelCheckpoint.setText(String.valueOf(next.getOrder()));
@@ -143,22 +120,18 @@ public class BoardController implements Initializable, BoatObserver {
                 c.setLayoutY(boat.getBorders().getBarycentre().getY());
 
                 // Borders
-                for ( int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
+                for (int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
                     this.r.get(j).setLayoutX(game.getBoat().getBorders().getPoints().get(j).getX());
                     this.r.get(j).setLayoutY(game.getBoat().getBorders().getPoints().get(j).getY());
                 }
             }
         });
-        }else{
-            System.out.println("Fin du jeu");
-        }
     }
 
     // MENU FUNCTIONS
 
     /**
      * Handle menu about.
-     *
      */
     public void handleAbout() {
         Alert about = new Alert(Alert.AlertType.INFORMATION);
@@ -173,7 +146,7 @@ public class BoardController implements Initializable, BoatObserver {
         about.show();
     }
 
-    public void handleExit(ActionEvent actionEvent) {
+    public void handleExit() {
         exitGame();
     }
 

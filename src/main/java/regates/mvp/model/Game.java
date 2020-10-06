@@ -2,6 +2,8 @@ package regates.mvp.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import lombok.Getter;
+import regates.mvp.model.boat.Boat;
+import regates.mvp.model.boat.BoatObserver;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,9 +11,9 @@ import java.util.TimerTask;
 public class Game {
 
     private Timer t;
-    private TimerTask tt;
     private String configurationFilename;
-    private Boat boat;
+    private final Boat boat;
+    @Getter
     private int order = 0;
 
     public Game() {
@@ -19,18 +21,18 @@ public class Game {
     }
 
     public void start() {
-        tt = new TimerTask() {
+        // Calcule des nouvelles coordonnées
+        TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
-                boat.notifyObservers();
                 if (testCollision()) {
                     System.exit(11);
                 }
                 if(testCheckpoint(order)){
                     order++;
-                    moveCheckPoint();
+                    // TODO gérer le cas où order > taille arraylist --> victoire
                 }
             }
         };
@@ -75,8 +77,4 @@ public class Game {
         this.boat.addObserver(bo);
     }
 
-
-    public void launchGame(String s) {
-
-    }
 }

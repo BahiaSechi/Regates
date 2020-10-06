@@ -1,4 +1,5 @@
 package regates.mvp.model;
+
 import lombok.*;
 
 @AllArgsConstructor
@@ -6,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 
-public class Coordinate   {
+public class Coordinate {
     private double x;
     private double y;
 
@@ -17,5 +18,10 @@ public class Coordinate   {
 
     public static double distance(Coordinate a, Coordinate b) {
         return Math.sqrt(Math.pow(b.getX() - a.getX(), 2) + Math.pow(b.getY() - a.getY(), 2));
+    }
+
+    public boolean equals(Coordinate c2) {
+        return this.x == c2.x && this.y == c2.y;
+
     }
 }

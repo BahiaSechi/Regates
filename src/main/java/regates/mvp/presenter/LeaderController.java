@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class LeaderController implements Initializable {
 
     @FXML
-    ListView listV;
+    private ListView<Score> listV;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
