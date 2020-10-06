@@ -32,6 +32,9 @@ public class Game {
                 }
                 if(testCheckpoint(order)){
                     order++;
+                    if(order==Board.getInstance().getCheckpoints().size()){
+                        
+                    }
                     // TODO gérer le cas où order > taille arraylist --> victoire
                 }
             }

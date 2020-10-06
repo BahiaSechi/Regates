@@ -109,7 +109,11 @@ public class BoardController implements Initializable, BoatObserver {
             AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
             AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
-            labelCheckpoint.setText(String.valueOf(next.getOrder()));
+            if(this.game.getOrder()==Board.getInstance().getCheckpoints().size()){
+                labelCheckpoint.setText("END");
+            }else{
+                labelCheckpoint.setText(String.valueOf(next.getOrder()));
+            }
             nextCheckpoint.setRadius(next.getRadius());
             txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
             txtCap.setText(boat.getAngle().getValue() + " °");
