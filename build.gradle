@@ -66,6 +66,13 @@ jacocoTestReport {
         xml.enabled false
         csv.enabled false
         html.destination file("${buildDir}/jacocoHtml")
+
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['regates/mvp/presenter/**', 'regates/mvp/vue/**'])
+        })
     }
 }
 targetCompatibility = '10'
