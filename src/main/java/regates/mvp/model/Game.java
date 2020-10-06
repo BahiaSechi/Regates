@@ -12,6 +12,7 @@ public class Game {
     private TimerTask tt;
     private String configurationFilename;
     private Boat boat;
+    private int order = 0;
 
     public Game() {
         this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
@@ -26,6 +27,10 @@ public class Game {
                 boat.notifyObservers();
                 if (testCollision()) {
                     System.exit(11);
+                }
+                if(testCheckpoint(order)){
+                    order++;
+                    moveCheckPoint();
                 }
             }
         };
@@ -42,6 +47,19 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public boolean testCheckpoint(int order) {
+        for (Coordinate c : boat.getBorders().getPoints()) {
+                if (Coordinate.distance(c, Board.getInstance().getCheckpoints().get(order).getPosition()) <= Board.getInstance().getCheckpoints().get(order).getRadius()) {
+                    return true;
+                }
+
+        }
+        return false;
+    }
+    public void moveCheckPoint(){
+
     }
 
     public void stop() {

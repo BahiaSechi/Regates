@@ -8,7 +8,7 @@ public class Buoy {
 
     private int id;
     @Getter
-    private float radius;
+    private double radius;
     @Getter
     private Coordinate position;
     private String status;
