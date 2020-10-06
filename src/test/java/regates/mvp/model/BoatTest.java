@@ -3,6 +3,8 @@ package regates.mvp.model;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.junit.Assert;
 import org.junit.Test;
+import regates.mvp.model.boat.Boat;
+import regates.mvp.model.boat.BoatObserver;
 
 public class BoatTest {
 

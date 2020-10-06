@@ -1,8 +1,6 @@
 package regates.mvp.presenter;
 
-import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -15,8 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
-import regates.mvp.model.Boat;
-import regates.mvp.model.BoatObserver;
+import regates.mvp.model.boat.Boat;
+import regates.mvp.model.boat.BoatObserver;
 import regates.mvp.model.Coordinate;
 import regates.mvp.model.Game;
 
@@ -37,7 +35,6 @@ public class BoardController implements Initializable, BoatObserver {
     AnchorPane gameBoard;
 
     private Game game;
-    private Scene scene;
 
     // Debug display
     private List<Rectangle> r;
@@ -46,8 +43,7 @@ public class BoardController implements Initializable, BoatObserver {
 
 
     public void setScene(Scene scene) {
-        this.scene = scene;
-        this.scene.setOnKeyPressed(event -> {
+        scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {
                 game.getBoat().rotate(-1);
             } else if (event.getCode() == KeyCode.RIGHT) {
@@ -93,8 +89,8 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgshift().getX());
-        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgshift().getY());
+        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
+        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
 
         Platform.runLater(() -> {
             txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
@@ -133,7 +129,7 @@ public class BoardController implements Initializable, BoatObserver {
         about.show();
     }
 
-    public void handleExit(ActionEvent actionEvent) {
+    public void handleExit() {
         exitGame();
     }
 

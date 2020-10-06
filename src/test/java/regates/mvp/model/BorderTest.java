@@ -14,8 +14,8 @@ public class BorderTest {
         b.setBarycentre(new Coordinate(0, 0));
         b.generateBordersForImage(new Coordinate(0, 0), new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
         Assert.assertEquals(b.getPoints().size(), 4761);
-        Assert.assertEquals(b.getImgshift().getX(), 24, 1);
-        Assert.assertEquals(b.getImgshift().getY(), 28, 1);
+        Assert.assertEquals(b.getImgShift().getX(), 24, 1);
+        Assert.assertEquals(b.getImgShift().getY(), 28, 1);
     }
 
     @Test
