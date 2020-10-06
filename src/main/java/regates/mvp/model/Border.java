@@ -10,20 +10,20 @@ import java.util.List;
 public class Border {
 
     @Getter
-    private List<Coordinate> points;
+    private final List<Coordinate> points;
 
     @Getter
     @Setter
     private Coordinate barycentre;
 
     @Getter
-    private Coordinate imgshift;
+    private Coordinate imgShift;
 
     public Border() {
         this.points = new ArrayList<>();
     }
 
-    public void generateBordersForImage(Coordinate origin, Image img, double width, double height) {
+    public void generateBordersForImage(Image img, double width, double height) {
         double wRatio = width / img.getWidth();
         double hRatio = height / img.getHeight();
         for (int x = 0; x < img.getWidth(); x++)
@@ -32,16 +32,17 @@ public class Border {
                     points.add(new Coordinate(x * wRatio, y * hRatio));
                 }
 
-        this.imgshift = this.barycentreCalculation();
+        this.imgShift = this.barycentreCalculation();
         for (Coordinate c : this.points) {
-            c.setX(c.getX() - imgshift.getX());
-            c.setY(c.getY() - imgshift.getY());
+            c.setX(c.getX() - imgShift.getX());
+            c.setY(c.getY() - imgShift.getY());
         }
         this.translateBorders();
     }
 
     private Coordinate barycentreCalculation() {
-        double moyX = 0, moyY = 0;
+        double moyX = 0;
+        double moyY = 0;
         for (Coordinate c : this.points) {
             moyX += c.getX();
             moyY += c.getY();
