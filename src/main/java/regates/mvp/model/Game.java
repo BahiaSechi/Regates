@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
-    @Getter
+
     private Timer t;
     private TimerTask tt;
     private String configurationFilename;
@@ -24,7 +24,7 @@ public class Game {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
                 boat.notifyObservers();
-                if(testCollision()){
+                if (testCollision()) {
                     System.exit(11);
                 }
             }
@@ -43,8 +43,10 @@ public class Game {
         }
         return false;
     }
-    public void stopGame(){
 
+    public void stop() {
+        t.cancel();
+        t.purge();
     }
 
     public Boat getBoat() {

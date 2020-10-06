@@ -178,8 +178,7 @@ public class BoardController implements Initializable, BoatObserver {
     }
 
     public void exitGame() {
-        game.getT().cancel();
-        game.getT().purge();
+        game.stop();
         Platform.exit();
     }
 }
