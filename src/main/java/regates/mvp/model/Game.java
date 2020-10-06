@@ -21,7 +21,6 @@ public class Game {
     }
 
     public void start() {
-        // Calcule des nouvelles coordonnées
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
@@ -33,7 +32,7 @@ public class Game {
                 if(testCheckpoint(order)){
                     order++;
                     if(order==Board.getInstance().getCheckpoints().size()){
-                        
+
                     }
                     // TODO gérer le cas où order > taille arraylist --> victoire
                 }

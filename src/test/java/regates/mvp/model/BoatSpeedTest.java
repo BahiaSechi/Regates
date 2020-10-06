@@ -11,7 +11,7 @@ public class BoatSpeedTest {
     public void should_return_first_boat_speed() {
         Boat b = new Boat(new SimpleIntegerProperty(1), null);
         double speed = b.determinateSpeed(1);
-        assertEquals(speed, 1.7, 0.01);
+        assertEquals(1.7, speed, 0.01);
     }
 
     @Test
