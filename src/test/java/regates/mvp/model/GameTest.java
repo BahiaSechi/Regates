@@ -2,6 +2,7 @@ package regates.mvp.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import regates.mvp.model.boat.BoatObserver;
 
 public class GameTest {
 

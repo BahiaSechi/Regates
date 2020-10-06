@@ -2,6 +2,7 @@ package regates.mvp.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import org.junit.Test;
+import regates.mvp.model.boat.Boat;
 
 import static org.junit.Assert.assertEquals;
 

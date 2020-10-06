@@ -10,14 +10,14 @@ import java.util.List;
 public class Border {
 
     @Getter
-    private List<Coordinate> points;
+    private final List<Coordinate> points;
 
     @Getter
     @Setter
     private Coordinate barycentre;
 
     @Getter
-    private Coordinate imgshift;
+    private Coordinate imgShift;
 
     public Border() {
         this.points = new ArrayList<>();
@@ -32,10 +32,10 @@ public class Border {
                     points.add(new Coordinate(x * wRatio, y * hRatio));
                 }
 
-        this.imgshift = this.barycentreCalculation();
+        this.imgShift = this.barycentreCalculation();
         for (Coordinate c : this.points) {
-            c.setX(c.getX() - imgshift.getX());
-            c.setY(c.getY() - imgshift.getY());
+            c.setX(c.getX() - imgShift.getX());
+            c.setY(c.getY() - imgShift.getY());
         }
         this.translateBorders();
     }
