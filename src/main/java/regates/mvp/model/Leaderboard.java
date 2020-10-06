@@ -3,6 +3,7 @@ package regates.mvp.model;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Setter
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Leaderboard {
@@ -50,4 +52,5 @@ public class Leaderboard {
     public void sortByName() {
         scores.sort(Score.ComparatorPlayer);
     }
+
 }

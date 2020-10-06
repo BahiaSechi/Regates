@@ -8,9 +8,7 @@ import regates.mvp.model.boat.BoatObserver;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,6 +22,8 @@ public class Game {
     @Getter
     private int order = 0;
 
+
+
     //Ajouté par MOMO dev de l'espace!
     //Pour score
     private Clock clock = Clock.systemDefaultZone();
@@ -32,8 +32,10 @@ public class Game {
     private long pScore = 0;
     //Pour popup
     final JFrame parent = new JFrame();
-    JButton button = new JButton();
 
+    JButton button = new JButton();
+    Leaderboard leaderboard = Leaderboard.getInstance() ;
+    List<Score> scores = new ArrayList<>();
 
 
     public Game() {
@@ -63,10 +65,8 @@ public class Game {
         tFinish = clock.millis();
         pScore = 1000 - (tFinish - tStart)/1000;
         playerScore.setValue(pScore);
-        if (true) {     //Mettre a la place de true si playerScore.value est supérrieur au dernier score enregistré
-            playerScore.setPlayer(capturePlayerName()); //capturePlayerName est le popup qui réccupere le nom du joueur
-            //Ajouter playerScore au fichier .
-        }
+        addPlayer (playerScore, leaderboard);//Ajouter playerScore au fichier .
+
 
         t = new Timer();
         t.scheduleAtFixedRate(tt, 0, 100);
@@ -111,10 +111,26 @@ public class Game {
 
     public String capturePlayerName() {
         String playerName;
-        //This functio reat a pop-up to capture the player's name and return it.
+        //This function reat a pop-up to capture the player's name and return it.
         playerName = JOptionPane.showInputDialog(parent,
                         "What is your name?", null);
         return playerName;
     }
 
+    public void addPlayer(Score playerScore, Leaderboard leaderboard) {
+        List<Score> scores = new ArrayList<>();
+        Score min;
+        leaderboard.sortByScore();
+        scores = leaderboard.getScores();
+        min = scores.get(scores.size() - 1);
+        if (leaderboard.getScores().size() < 100 ) {
+            playerScore.setPlayer(capturePlayerName());
+            leaderboard.getScores().add(playerScore);
+        }
+        else if (playerScore.getValue() > min.getValue()) {
+            playerScore.setPlayer(capturePlayerName());
+            leaderboard.getScores().remove(min); // a revoir
+            leaderboard.getScores().add(playerScore);
+        }
+    }
 }
