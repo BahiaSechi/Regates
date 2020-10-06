@@ -11,7 +11,6 @@ public class BoardTest {
 
         b.start();
         b.testEnd();
-        b.endGame();
         //
     }
 }

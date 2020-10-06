@@ -1,22 +1,27 @@
 package regates.mvp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
 public class Checkpoint {
     @NonNull
-    private int order;
+    private final int order;
 
     @NonNull
-    private Coordinate position;
+    private final Coordinate position;
 
     @NonNull
-    private double radius;
+    private final double radius;
 
-    @Setter
-    private boolean valid;
+
+    public Checkpoint(
+            @JsonProperty("order") int order,
+            @JsonProperty("position") Coordinate position,
+            @JsonProperty("radius") double radius) {
+        this.order = order;
+        this.position = position;
+        this.radius = radius;
+    }
 }

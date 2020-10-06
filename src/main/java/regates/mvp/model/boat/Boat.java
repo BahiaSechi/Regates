@@ -42,7 +42,7 @@ public class Boat implements BoatObservable {
      */
     public boolean isCollision(Coordinate a) {
         for (Coordinate c : this.getBorders().getPoints()){
-            if(c.equals(a)){
+            if(Coordinate.distance(c, a) < 1){
                 return true;
             }
         }
