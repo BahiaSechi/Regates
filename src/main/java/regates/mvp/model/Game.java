@@ -21,7 +21,6 @@ public class Game {
     }
 
     public void start() {
-        // Calcule des nouvelles coordonnées
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {

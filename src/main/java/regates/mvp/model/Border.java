@@ -23,7 +23,7 @@ public class Border {
         this.points = new ArrayList<>();
     }
 
-    public void generateBordersForImage(Coordinate origin, Image img, double width, double height) {
+    public void generateBordersForImage(Image img, double width, double height) {
         double wRatio = width / img.getWidth();
         double hRatio = height / img.getHeight();
         for (int x = 0; x < img.getWidth(); x++)
@@ -41,7 +41,8 @@ public class Border {
     }
 
     private Coordinate barycentreCalculation() {
-        double moyX = 0, moyY = 0;
+        double moyX = 0;
+        double moyY = 0;
         for (Coordinate c : this.points) {
             moyX += c.getX();
             moyY += c.getY();

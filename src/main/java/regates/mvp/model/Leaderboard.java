@@ -23,13 +23,12 @@ public class Leaderboard {
         return instance;
     }
 
-    //"/regates/mvp/scoresData.txt"
     public void readScore(String path) {
         String[] buffer;
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new File(getClass().getResource("/regates/mvp/scoresData.txt").getPath()));
-            while(scanner.hasNextLine()) {
+        try (Scanner scanner = new Scanner(
+                new File(Objects.requireNonNull(
+                        Thread.currentThread().getContextClassLoader().getResource(path)).getPath()))) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -37,10 +36,6 @@ public class Leaderboard {
             }
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
-        } finally {
-            if (scanner != null) {
-                scanner.close();
-            }
         }
     }
 

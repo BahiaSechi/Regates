@@ -72,7 +72,6 @@ public class BoardController implements Initializable, BoatObserver {
             imgWheel.setRotate(newValue.doubleValue());
         });
         game.getBoat().getBorders().generateBordersForImage(
-                game.getBoat().getPosition(),
                 regate.getImage(),
                 regate.getFitWidth(),
                 regate.getFitHeight()
