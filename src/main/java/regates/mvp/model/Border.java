@@ -8,13 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Border {
+
     @Getter
-    List<Coordinate> points;
+    private List<Coordinate> points;
+
     @Getter
     @Setter
-    Coordinate barycentre;
+    private Coordinate barycentre;
+
     @Getter
-    Coordinate imgshift;
+    private Coordinate imgshift;
 
     public Border() {
         this.points = new ArrayList<>();
@@ -46,7 +49,7 @@ public class Border {
         return new Coordinate(moyX / this.points.size(), moyY / this.points.size());
     }
 
-    public void rotate(Coordinate origin, double angle) {
+    public void rotate(double angle) {
         resetTranslation();
         for (Coordinate c : this.points) {
             double radAngle = Math.toRadians(angle);

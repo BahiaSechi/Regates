@@ -8,7 +8,7 @@ import java.util.Date;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Board {
 
-    private Board board;
+    private static Board board;
 
     private int width; // fixé ?
 
@@ -20,7 +20,7 @@ public class Board {
 
     private Date timestamp;
 
-    public Board getInstance(){
+    public static Board getInstance(){
         if(board == null)
             board = new Board();
         return board;

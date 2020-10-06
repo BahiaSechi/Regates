@@ -68,3 +68,5 @@ jacocoTestReport {
         html.destination file("${buildDir}/jacocoHtml")
     }
 }
+targetCompatibility = '10'
+sourceCompatibility = '10'
