@@ -4,6 +4,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import lombok.Getter;
 
 import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JButton;
@@ -23,11 +26,11 @@ public class Game {
     private Clock clock = Clock.systemDefaultZone();
     private long tStart = 0;
     private long tFinish = 0;
-    private long tLap = 0;
+    private long pScore = 0;
     //Pour popup
     final JFrame parent = new JFrame();
     JButton button = new JButton();
-    private String playerName;
+
 
 
     public Game() {
@@ -35,6 +38,9 @@ public class Game {
     }
 
     public void start() {
+        Date date = new Date(); // the variable is initialized with the current date/time !
+        Score playerScore = new Score("Player",0,date);
+        tStart =  clock.millis(); //timeStamp
         tt = new TimerTask() {
             @Override
             public void run() {
@@ -42,6 +48,14 @@ public class Game {
                 boat.move(4);
             }
         };
+        tFinish = clock.millis();
+        pScore = 1000 - (tFinish - tStart)/1000;
+        playerScore.setValue(pScore);
+        if (true) {     //Mettre a la place de true si playerScore.value est supérrieur au dernier score enregistré
+            playerScore.setPlayer(capturePlayerName()); //capturePlayerName est le popup qui réccupere le nom du joueur
+            //Ajouter playerScore au fichier .
+        }
+
         t = new Timer();
         t.scheduleAtFixedRate(tt, 0, 100);
     }
@@ -58,6 +72,7 @@ public class Game {
     }
 
     public String capturePlayerName() {
+        String playerName;
         //This functio reat a pop-up to capture the player's name and return it.
         playerName = JOptionPane.showInputDialog(parent,
                         "What is your name?", null);
