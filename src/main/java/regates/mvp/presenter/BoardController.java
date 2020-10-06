@@ -1,6 +1,8 @@
 package regates.mvp.presenter;
 
+import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -32,13 +34,7 @@ public class BoardController implements Initializable, BoatObserver {
     @Getter
     ImageView regate;
     @FXML
-    Label txtCap;
-    @FXML
-    Label txtStrength;
-    @FXML
-    Label txtSpeed;
-    @FXML
-    Label txtWind;
+    Label txtCap, txtStrength, txtSpeed, txtWind;
     @FXML
     ImageView imgWheel;
 
@@ -61,23 +57,6 @@ public class BoardController implements Initializable, BoatObserver {
     private List<Rectangle> r;
     private final Circle c = new Circle();
     // Debug display
-
-    /**
-     * Handle menu about.
-     *
-     */
-    public void handleAbout() {
-        Alert about = new Alert(Alert.AlertType.INFORMATION);
-        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
-                "Authors : ALOUACHE Loan & BURON Manfred \n" +
-                "FAVE Anthony & HESLOUIN Alexis \n" +
-                "LE MAZIER Elise & MORIN Maxence \n" +
-                "RICH Mohamed & SECHI Bahia \n" +
-                "Date : September 2020 \n" +
-                "Version : 1.0");
-        about.setTitle("Regate - About");
-        about.show();
-    }
 
 
     public void setScene(Scene scene) {
@@ -173,5 +152,34 @@ public class BoardController implements Initializable, BoatObserver {
         }else{
             System.out.println("Fin du jeu");
         }
+    }
+
+    // MENU FUNCTIONS
+
+    /**
+     * Handle menu about.
+     *
+     */
+    public void handleAbout() {
+        Alert about = new Alert(Alert.AlertType.INFORMATION);
+        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
+                "Authors : ALOUACHE Loan & BURON Manfred \n" +
+                "FAVE Anthony & HESLOUIN Alexis \n" +
+                "LE MAZIER Elise & MORIN Maxence \n" +
+                "RICH Mohamed & SECHI Bahia \n" +
+                "Date : September 2020 \n" +
+                "Version : 1.0");
+        about.setTitle("Regate - About");
+        about.show();
+    }
+
+    public void handleExit(ActionEvent actionEvent) {
+        exitGame();
+    }
+
+    public void exitGame() {
+        game.getT().cancel();
+        game.getT().purge();
+        Platform.exit();
     }
 }

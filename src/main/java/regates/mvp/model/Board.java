@@ -45,8 +45,8 @@ listBuoy.add(new Buoy(1,4,new Coordinate(464,51),"yolo"));
         return true;
     }
 
-    public Score endGame() {
-        return new Score(0, new Date(), "Maxence");
+    public Score endGame(){
+        return new Score("Maxence", 0, new Date());
     }
 
 }
