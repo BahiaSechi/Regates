@@ -24,12 +24,18 @@ public class Border {
     }
 
     public void generateBordersForImage(Image img, double width, double height) {
+        int nbPoints = 0;
         double wRatio = width / img.getWidth();
         double hRatio = height / img.getHeight();
         for (int x = 0; x < img.getWidth(); x++)
             for (int y = 0; y < img.getHeight(); y++)
                 if (!isTransparent(img, x, y) && hasTransparentNeighbour(img, x, y)) {
-                    points.add(new Coordinate(x * wRatio, y * hRatio));
+                    // Only keep 1 point on 4 to reduce latency
+                    // Doesn't have any effect on collision detection accuracy
+                    if (nbPoints % 4 == 0) {
+                        points.add(new Coordinate(x * wRatio, y * hRatio));
+                    }
+                    nbPoints++;
                 }
 
         this.imgShift = this.barycentreCalculation();
