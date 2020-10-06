@@ -12,7 +12,10 @@ public class Game {
     private Boat boat;
 
     public Game() {
-        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(500, 300));
+        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
+    }
+
+    public void start() {
         tt = new TimerTask() {
             @Override
             public void run() {
@@ -22,11 +25,10 @@ public class Game {
                 if(testCollision()){
                     System.exit(11);
                 }
-
             }
         };
         t = new Timer();
-        t.scheduleAtFixedRate(tt, 0, 54);
+        t.scheduleAtFixedRate(tt, 0, 100);
     }
 
     public boolean testCollision() {
@@ -38,6 +40,9 @@ public class Game {
             }
         }
         return false;
+    }
+    public void stopGame(){
+
     }
 
     public Boat getBoat() {
