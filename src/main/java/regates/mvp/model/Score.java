@@ -45,5 +45,6 @@ public class Score {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         return player + "\t\t\t" + value + "\t\t\t" + formatter.format(date); // TODO work on proper formatting data
+
     }
 }

@@ -3,8 +3,13 @@ package regates.mvp.model;
 import javafx.beans.property.SimpleIntegerProperty;
 import lombok.Getter;
 
+import java.time.Clock;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 
 public class Game {
     @Getter
@@ -12,6 +17,18 @@ public class Game {
     private TimerTask tt;
     private String configurationFilename;
     private Boat boat;
+
+    //Ajouté par MOMO dev de l'espace!
+    //Pour score
+    private Clock clock = Clock.systemDefaultZone();
+    private long tStart = 0;
+    private long tFinish = 0;
+    private long tLap = 0;
+    //Pour popup
+    final JFrame parent = new JFrame();
+    JButton button = new JButton();
+    private String playerName;
+
 
     public Game() {
         this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
@@ -35,6 +52,16 @@ public class Game {
 
     public void setObserver(BoatObserver bo) {
         this.boat.addObserver(bo);
+    }
+
+    public void launchGame(String s) {
+    }
+
+    public String capturePlayerName() {
+        //This functio reat a pop-up to capture the player's name and return it.
+        playerName = JOptionPane.showInputDialog(parent,
+                        "What is your name?", null);
+        return playerName;
     }
 
 }
