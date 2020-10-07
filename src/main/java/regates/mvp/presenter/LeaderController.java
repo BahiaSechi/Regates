@@ -25,7 +25,6 @@ public class LeaderController implements Initializable {
             List<Score> list = Leaderboard.getInstance().getScores();
             ObservableList<Score> scores = FXCollections.observableArrayList(list);
             listV.setItems(scores);
-
         } catch (NullPointerException e) {
             e.getMessage();
         }
