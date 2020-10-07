@@ -7,13 +7,13 @@ import lombok.Getter;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
 
-<<<<<<< HEAD
+
 import java.time.Clock;
-=======
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
->>>>>>> a0206d96b640ba9c83bbaf090483f2ede9053040
+
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JButton;
