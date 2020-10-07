@@ -37,15 +37,13 @@ public class Leaderboard {
     /**
      * Allow to read scores from a text file
      *
-     * @param path the text file's path
+     * @param path the text file's path (default : /regates/mvp/scoresData.txt)
      */
-    public void readScore(String path) {    //"/regates/mvp/scoresData.txt"
+    public void readScore(String path) {
         String[] buffer;
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(
-                    new File(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(path)).getPath())));
-            
+        try (Scanner scanner = new Scanner(
+                new File(Objects.requireNonNull(
+                        Thread.currentThread().getContextClassLoader().getResource(path)).getPath()))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
