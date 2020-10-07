@@ -13,8 +13,6 @@ import java.util.*;
 /**
  * Represent the Leaderboard of a game
  *
- * @Author Elise Le Mazier
- * @Version 1.0
  */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
