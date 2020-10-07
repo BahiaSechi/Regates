@@ -62,21 +62,21 @@ public class Leaderboard {
     }
 
     /**
-     *
+     * Allow to sort by date
      */
     public void sortByDate() {
         Collections.sort(scores, Score.ComparatorDate);
     }
 
     /**
-     *
+     * Allow to sort by score
      */
     public void sortByScore() {
         Collections.sort(scores, Score.ComparatorScore);
     }
 
     /**
-     *
+     * Allow to sort by name
      */
     public void sortByName() {
         Collections.sort(scores, Score.ComparatorPlayer);
