@@ -163,11 +163,12 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
-        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
 
-        Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
         Platform.runLater(() -> {
+            regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
+            regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
+
+            Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
             AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
