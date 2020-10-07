@@ -3,8 +3,6 @@ package regates.mvp.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Board {
@@ -20,16 +18,9 @@ public class Board {
     @Getter
     @Setter
     private List<Coast> coasts;
-    private int width; // fixé ?
-    private int height;
     @Getter
     @Setter
-    private int windDirection;
-    @Getter
-    @Setter
-    private int windSpeed;
-    private Date timestamp;
-
+    private Wind wind;
 
     private Board() {
     }
@@ -43,14 +34,4 @@ public class Board {
     public Checkpoint getCheckpoint(int order) {
         return checkpoints.get(order);
     }
-
-    public boolean start() {
-        return true;
-    }
-
-    public boolean testEnd() {
-        return true;
-    }
-
-
 }

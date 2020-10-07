@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,12 +20,9 @@ import regates.mvp.model.*;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
 
+import javax.xml.transform.Result;
 import java.net.URL;
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class BoardController implements Initializable, BoatObserver {
     @FXML
@@ -66,7 +64,15 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.game = new Game();
+        try {
+            this.game = new Game();
+        } catch (Exception e) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText(e.getMessage());
+            error.setTitle("Erreur");
+            error.showAndWait();
+            System.exit(-1);
+        }
 
         this.game.setObserver(this);
         game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
@@ -85,7 +91,7 @@ public class BoardController implements Initializable, BoatObserver {
             buoy.setImage(
                     new Image(
                             Objects.requireNonNull(
-                                    Thread.currentThread().getContextClassLoader().getResourceAsStream("regates/mvp/img/buoy.png")
+                                    Thread.currentThread().getContextClassLoader().getResourceAsStream("regates/mvp/img/map/buoy.png")
                             )
                     )
             );
@@ -122,8 +128,8 @@ public class BoardController implements Initializable, BoatObserver {
             coastIV.setLayoutY(coast.getPosition().getY() - coast.getBorders().getImgShift().getY());
             this.gameBoard.getChildren().add(coastIV);
 
-            this.txtStrength.setText(Board.getInstance().getWindSpeed() + " nd");
-            this.txtWind.setText(Board.getInstance().getWindDirection() + " °");
+            this.txtStrength.setText(Board.getInstance().getWind().getStrength() + " nd");
+            this.txtWind.setText(Board.getInstance().getWind().getDirection() + " °");
             game.start();
         }
 
@@ -157,11 +163,12 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void update(Boat boat) {
-        regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
-        regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
 
-        Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
         Platform.runLater(() -> {
+            regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
+            regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
+
+            Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
             AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
@@ -209,10 +216,16 @@ public class BoardController implements Initializable, BoatObserver {
         about.show();
     }
 
+    /**
+     * Handle exit the game.
+     */
     public void handleExit() {
         exitGame();
     }
 
+    /**
+     * Exit the game and finish the thread.
+     */
     public void exitGame() {
         game.stop();
         Platform.exit();

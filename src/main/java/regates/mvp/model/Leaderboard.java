@@ -11,7 +11,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
 @Setter
+/**
+ * Represent the Leaderboard of a game
+ *
+ * @Author Elise Le Mazier
+ * @Version 1.0
+ */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Leaderboard {
@@ -19,12 +26,22 @@ public class Leaderboard {
     private final List<Score> scores = new ArrayList<>();
     private static Leaderboard instance;
 
+    /**
+     * Create a leaderboard instance
+     *
+     * @return the instance of the leaderboard
+     */
     public static Leaderboard getInstance() {
         if (instance == null)
             instance = new Leaderboard();
         return instance;
     }
 
+    /**
+     * Allow to read scores from a text file
+     *
+     * @param path the text file's path (default : /regates/mvp/scoresData.txt)
+     */
     public void readScore(String path) {
         String[] buffer;
         try (Scanner scanner = new Scanner(
@@ -41,16 +58,24 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Allow to sort by date
+     */
     public void sortByDate() {
         scores.sort(Score.ComparatorDate);
     }
 
+    /**
+     * Allow to sort by score
+     */
     public void sortByScore() {
         scores.sort(Score.ComparatorScore);
     }
 
+    /**
+     * Allow to sort by name
+     */
     public void sortByName() {
         scores.sort(Score.ComparatorPlayer);
     }
-
 }

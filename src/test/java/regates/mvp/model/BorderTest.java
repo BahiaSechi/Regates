@@ -13,6 +13,7 @@ public class BorderTest {
         Border b = new Border();
         b.setBarycentre(new Coordinate(0, 0));
         b.generateBordersForImage(new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
+
         Assert.assertEquals(1191, b.getPoints().size());
         Assert.assertEquals(24, b.getImgShift().getX(), 1.);
         Assert.assertEquals(28, b.getImgShift().getY(), 1.);

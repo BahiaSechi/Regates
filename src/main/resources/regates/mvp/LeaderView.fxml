@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="983.0" prefWidth="1310.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.LeaderController">
-   <children>
-      <Label layoutX="558.0" layoutY="46.0" text="Leaderboard">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <ListView fx:id="listV" prefHeight="865.0" prefWidth="1310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="118.0" />
-   </children>
+<AnchorPane prefHeight="983.0" prefWidth="1310.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.LeaderController">
+   <Label layoutX="558.0" layoutY="46.0" text="%menu.leaderboard">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </Label>
+   <ListView fx:id="listV" prefHeight="865.0" prefWidth="1310.0" AnchorPane.bottomAnchor="0.0"
+             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="118.0"/>
 </AnchorPane>
