@@ -58,7 +58,7 @@ checkpoints:
 
 # Liste de points correspondant à la côte
 coasts:
-  - imgPath: "regates/mvp/img/coast.png"
+  - imgPath: "regates/mvp/img/coast/coast.png"
     position:
       x: 1120
       y: 400

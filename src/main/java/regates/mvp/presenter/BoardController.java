@@ -85,7 +85,7 @@ public class BoardController implements Initializable, BoatObserver {
             buoy.setImage(
                     new Image(
                             Objects.requireNonNull(
-                                    Thread.currentThread().getContextClassLoader().getResourceAsStream("regates/mvp/img/buoy.png")
+                                    Thread.currentThread().getContextClassLoader().getResourceAsStream("regates/mvp/img/map/buoy.png")
                             )
                     )
             );
@@ -209,10 +209,16 @@ public class BoardController implements Initializable, BoatObserver {
         about.show();
     }
 
+    /**
+     * Handle exit the game.
+     */
     public void handleExit() {
         exitGame();
     }
 
+    /**
+     * Exit the game and finish the thread.
+     */
     public void exitGame() {
         game.stop();
         Platform.exit();
