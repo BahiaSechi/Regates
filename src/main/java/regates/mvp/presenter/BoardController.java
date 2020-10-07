@@ -44,6 +44,7 @@ public class BoardController implements Initializable, BoatObserver {
     @FXML
     Circle nextCheckpoint;
 
+    private String configPath;
     private Game game;
     // Debug display
     private List<Rectangle> r;
@@ -64,8 +65,83 @@ public class BoardController implements Initializable, BoatObserver {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @Override
+    public void update(Boat boat) {
+
+        Platform.runLater(() -> {
+            regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
+            regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
+
+            Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
+            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
+            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
+            AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
+            AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
+            labelCheckpoint.setText(String.valueOf(next.getOrder()));
+            nextCheckpoint.setRadius(next.getRadius());
+            txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
+            txtCap.setText(boat.getAngle().getValue() + " °");
+
+            if (true) {
+                // Barycentre
+                c.setLayoutX(boat.getBorders().getBarycentre().getX());
+                c.setLayoutY(boat.getBorders().getBarycentre().getY());
+
+                // Boat Borders
+                for (int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
+                    this.r.get(j).setLayoutX(game.getBoat().getBorders().getPoints().get(j).getX());
+                    this.r.get(j).setLayoutY(game.getBoat().getBorders().getPoints().get(j).getY());
+                }
+
+                // Coast Borders
+                for (int j = 0; j < Board.getInstance().getCoasts().get(0).getBorders().getPoints().size(); j++) {
+                    this.r2.get(j).setLayoutX(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getX());
+                    this.r2.get(j).setLayoutY(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getY());
+                }
+            }
+        });
+    }
+
+    // MENU FUNCTIONS
+
+    /**
+     * Handle menu about.
+     */
+    public void handleAbout() {
+        Alert about = new Alert(Alert.AlertType.INFORMATION);
+        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
+                "Authors : ALOUACHE Loan & BURON Manfred \n" +
+                "FAVE Anthony & HESLOUIN Alexis \n" +
+                "LE MAZIER Elise & MORIN Maxence \n" +
+                "RICH Mohamed & SECHI Bahia \n" +
+                "Date : September 2020 \n" +
+                "Version : 1.0");
+        about.setTitle("Regate - About");
+        about.show();
+    }
+
+    /**
+     * Handle exit the game.
+     */
+    public void handleExit() {
+        exitGame();
+    }
+
+    /**
+     * Exit the game and finish the thread.
+     */
+    public void exitGame() {
+        game.stop();
+        Platform.exit();
+    }
+
+    public void setConfigPath(String configPath) {
+        this.configPath = configPath;
         try {
-            this.game = new Game();
+            this.game = new Game(configPath);
         } catch (Exception e) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setContentText(e.getMessage());
@@ -159,75 +235,5 @@ public class BoardController implements Initializable, BoatObserver {
             c.setFill(Color.GREEN);
             this.gameBoard.getChildren().add(c);
         }
-    }
-
-    @Override
-    public void update(Boat boat) {
-
-        Platform.runLater(() -> {
-            regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
-            regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
-
-            Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
-            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
-            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
-            AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
-            AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
-            labelCheckpoint.setText(String.valueOf(next.getOrder()));
-            nextCheckpoint.setRadius(next.getRadius());
-            txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
-            txtCap.setText(boat.getAngle().getValue() + " °");
-
-            if (true) {
-                // Barycentre
-                c.setLayoutX(boat.getBorders().getBarycentre().getX());
-                c.setLayoutY(boat.getBorders().getBarycentre().getY());
-
-                // Boat Borders
-                for (int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
-                    this.r.get(j).setLayoutX(game.getBoat().getBorders().getPoints().get(j).getX());
-                    this.r.get(j).setLayoutY(game.getBoat().getBorders().getPoints().get(j).getY());
-                }
-
-                // Coast Borders
-                for (int j = 0; j < Board.getInstance().getCoasts().get(0).getBorders().getPoints().size(); j++) {
-                    this.r2.get(j).setLayoutX(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getX());
-                    this.r2.get(j).setLayoutY(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getY());
-                }
-            }
-        });
-    }
-
-    // MENU FUNCTIONS
-
-    /**
-     * Handle menu about.
-     */
-    public void handleAbout() {
-        Alert about = new Alert(Alert.AlertType.INFORMATION);
-        about.setContentText("This project is part of the software engineering course (ENSICAEN - Engineering School). \n" +
-                "Authors : ALOUACHE Loan & BURON Manfred \n" +
-                "FAVE Anthony & HESLOUIN Alexis \n" +
-                "LE MAZIER Elise & MORIN Maxence \n" +
-                "RICH Mohamed & SECHI Bahia \n" +
-                "Date : September 2020 \n" +
-                "Version : 1.0");
-        about.setTitle("Regate - About");
-        about.show();
-    }
-
-    /**
-     * Handle exit the game.
-     */
-    public void handleExit() {
-        exitGame();
-    }
-
-    /**
-     * Exit the game and finish the thread.
-     */
-    public void exitGame() {
-        game.stop();
-        Platform.exit();
     }
 }

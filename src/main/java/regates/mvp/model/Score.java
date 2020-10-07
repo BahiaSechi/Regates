@@ -2,7 +2,6 @@ package regates.mvp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -19,9 +18,9 @@ import java.util.Locale;
 @Getter
 public class Score {
 
-    private String player;
-    private float value;
-    private Date date;
+    private final String player;
+    private final float value;
+    private final Date date;
 
     /**
      * Allow to compare two scores by date
