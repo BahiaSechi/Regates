@@ -111,6 +111,7 @@ public class Game {
     /**
      * Test if the boat is in the Checkpint
      *
+     * @param order The order of the checkpoint to test
      * @return True if the boat hit the checkpoint
      */
     public boolean testCheckpoint(int order) {
