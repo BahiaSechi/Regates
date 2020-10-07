@@ -18,7 +18,7 @@ public class GameTest {
     @Test
     public void testgetT() throws Exception {
         Game g = new Game();
-        Assert.assertEquals(Integer.valueOf(0), g.getBoat().getAngle().getValue());
+        Assert.assertEquals(Integer.valueOf(1), g.getBoat().getAngle().getValue());
     }
 
     @Test
