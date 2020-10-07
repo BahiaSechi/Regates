@@ -66,9 +66,9 @@ public class MenuController implements Initializable {
             Parent root1 = fxmlLoader.load();
             BoardController bc = fxmlLoader.getController();
             Scene scene = new Scene(root1, 1310, 983);
-            bc.setScene(scene);
-            bc.startGame(this.configPath);
             Stage stage = new Stage();
+            bc.setScene(stage, scene);
+            bc.startGame(this.configPath);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(bundle.getString(TITLE));
             stage.setScene(scene);

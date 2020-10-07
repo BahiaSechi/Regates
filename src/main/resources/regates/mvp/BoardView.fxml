@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <GridPane alignment="center" hgap="10" prefHeight="983.0" prefWidth="1310.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
     <columnConstraints>
@@ -81,7 +89,7 @@
                     <Image url="@img/dashboard/wind.png" />
                 </ImageView>
 
-                <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="62.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="179.0">
                     <Image url="@img/dashboard/wind_direction.png" />
                 </ImageView>
             </AnchorPane>

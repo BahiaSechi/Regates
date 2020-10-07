@@ -16,7 +16,7 @@ import java.util.Locale;
 public class Score {
 
     private final String player;
-    private final float value;
+    private final double value;
     private final Date date;
 
     /**
@@ -27,7 +27,7 @@ public class Score {
     /**
      * Allow to compare two scores by score
      */
-    public static final Comparator<Score> ComparatorScore = (o1, o2) -> Float.compare(o2.getValue(), o1.getValue());
+    public static final Comparator<Score> ComparatorScore = (o1, o2) -> Double.compare(o2.getValue(), o1.getValue());
 
     /**
      * Allow to compare two scores by player's name

@@ -5,19 +5,21 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import regates.mvp.model.Coordinate;
 import regates.mvp.model.Game;
 import regates.mvp.model.*;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -28,7 +30,7 @@ import java.util.*;
  * @see Coast
  * @see Coordinate
  */
-public class BoardController implements BoatObserver {
+public class BoardController implements BoatObserver, GameObserver {
     @FXML
     ImageView regate;
     @FXML
@@ -48,24 +50,22 @@ public class BoardController implements BoatObserver {
     @FXML
     Circle nextCheckpoint;
 
+    private final ResourceBundle bundle = ResourceBundle.getBundle("regates.mvp.MessageBundle", new Locale("fr", "FR"));
+    private Stage stage;
     private Game game;
-    // Debug display
-    private List<Rectangle> r;
-    private List<Rectangle> r2;
-    private final Circle c = new Circle();
-    // Debug display
 
 
     /**
      * Define the scene key listeners
      * @param scene Game scene
      */
-    public void setScene(Scene scene) {
+    public void setScene(Stage s, Scene scene) {
+        this.stage = s;
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {
-                game.getBoat().rotate(-1);
+                game.getBoat().rotate(-2);
             } else if (event.getCode() == KeyCode.RIGHT) {
-                game.getBoat().rotate(+1);
+                game.getBoat().rotate(+2);
             }
         });
     }
@@ -86,25 +86,7 @@ public class BoardController implements BoatObserver {
             labelCheckpoint.setText(String.valueOf(next.getOrder()));
             nextCheckpoint.setRadius(next.getRadius());
             txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");
-            txtCap.setText(boat.getAngle().getValue() + " °");
-
-            if (true) {
-                // Barycentre
-                c.setLayoutX(boat.getBorders().getBarycentre().getX());
-                c.setLayoutY(boat.getBorders().getBarycentre().getY());
-
-                // Boat Borders
-                for (int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
-                    this.r.get(j).setLayoutX(game.getBoat().getBorders().getPoints().get(j).getX());
-                    this.r.get(j).setLayoutY(game.getBoat().getBorders().getPoints().get(j).getY());
-                }
-
-                // Coast Borders
-                for (int j = 0; j < Board.getInstance().getCoasts().get(0).getBorders().getPoints().size(); j++) {
-                    this.r2.get(j).setLayoutX(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getX());
-                    this.r2.get(j).setLayoutY(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getY());
-                }
-            }
+            txtCap.setText((boat.getAngle().getValue() > 0 ? Math.abs(boat.getAngle().getValue() % 360) : 360 - Math.abs(boat.getAngle().getValue() % 360)) + " °");
         });
     }
 
@@ -154,10 +136,11 @@ public class BoardController implements BoatObserver {
             error.setContentText(e.getMessage());
             error.setTitle("Erreur");
             error.showAndWait();
-            System.exit(-1);
+            this.stage.close();
         }
 
-        this.game.setObserver(this);
+        this.game.setBoatObserver(this);
+        this.game.addObserver(this);
 
         // Rotate boat and wheel according to player rotation
         game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
@@ -219,32 +202,64 @@ public class BoardController implements BoatObserver {
         this.txtStrength.setText(Board.getInstance().getWind().getStrength() + " nd");
         this.txtWind.setText(Board.getInstance().getWind().getDirection() + " °");
         game.start();
+    }
 
-        // TODO add debug config
-        if (true) {
-            r = new ArrayList<>();
-            r2 = new ArrayList<>();
-            for (Coordinate ignored : game.getBoat().getBorders().getPoints()) {
-                Rectangle rec = new Rectangle();
-                rec.setWidth(1);
-                rec.setHeight(1);
-                rec.setFill(Color.RED);
-                this.r.add(rec);
-                this.gameBoard.getChildren().add(rec);
+    /**
+     * End the game and ask player his name if his score reaches Top 100
+     * @param score Player score
+     */
+    @Override
+    public void win(long score) {
+        Platform.runLater(() -> {
+            Leaderboard.getInstance().sortByScore();
+            List<Score> scores = Leaderboard.getInstance().getScores();
+            Score min = null;
+            if (scores.size() > 0) {
+                min = scores.get(scores.size() - 1);
             }
-            for (Coordinate ignored : Board.getInstance().getCoasts().get(0).getBorders().getPoints()) {
-                Rectangle rec = new Rectangle();
-                rec.setWidth(1);
-                rec.setHeight(1);
-                rec.setFill(Color.RED);
-                this.r2.add(rec);
-                this.gameBoard.getChildren().add(rec);
+            if (Leaderboard.getInstance().getScores().size() < 100 ) {
+                String playerName = capturePlayerName(score);
+                Leaderboard.getInstance().getScores().add(new Score(playerName, score, new Date()));
+            } else if (min == null || score > min.getValue()) {
+                String playerName = capturePlayerName(score);
+                Leaderboard.getInstance().getScores().remove(Leaderboard.getInstance().getScores().size() - 1);
+                Leaderboard.getInstance().getScores().add(new Score(playerName, score, new Date()));
+            } else {
+                Alert about = new Alert(Alert.AlertType.INFORMATION);
+                about.setTitle(this.bundle.getString("dialog.win.title"));
+                about.setHeaderText(MessageFormat.format(this.bundle.getString("dialog.win.header"), score));
+                about.showAndWait();
             }
-            c.resize(10, 10);
-            c.setStroke(Color.GREEN);
-            c.setStrokeWidth(10);
-            c.setFill(Color.GREEN);
-            this.gameBoard.getChildren().add(c);
-        }
+            this.stage.close();
+        });
+    }
+
+    /**
+     * End the game and display a defeat popup
+     */
+    @Override
+    public void lose() {
+        Platform.runLater(() -> {
+            Alert about = new Alert(Alert.AlertType.INFORMATION);
+            about.setTitle(this.bundle.getString("dialog.lost.title"));
+            about.setHeaderText(this.bundle.getString("dialog.lost.header"));
+            about.showAndWait();
+            this.stage.close();
+        });
+    }
+
+    /**
+     * Open popup to ask player his pseudo
+     * @param score Player score
+     * @return Player's pseudo
+     */
+    private String capturePlayerName(long score) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(this.bundle.getString("dialog.win.title"));
+        dialog.setHeaderText(MessageFormat.format(this.bundle.getString("dialog.win.header"), score));
+        dialog.setContentText(this.bundle.getString("dialog.win.enterName"));
+
+        Optional<String> result = dialog.showAndWait();
+        return result.orElseGet(() -> capturePlayerName(score));
     }
 }

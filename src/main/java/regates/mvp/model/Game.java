@@ -10,15 +10,15 @@ import regates.mvp.model.boat.BoatObserver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.time.Clock;
+import java.util.*;
 
 /**
  * Represent the main class of the game. Contain the thread responsible for collision, movement and end of the game.
  */
-public class Game {
+public class Game implements GameObservable {
 
+    private final ResourceBundle bundle = ResourceBundle.getBundle("regates.mvp.MessageBundle", new Locale("fr", "FR"));
     private Timer timer;
     @Getter
     private final Boat boat;
@@ -30,6 +30,13 @@ public class Game {
     @Getter
     private int order = 0;
 
+    @Getter
+    private final List<GameObserver> observers;
+    private Clock clock = Clock.systemDefaultZone();
+    private long tStart = 0;
+    private long tFinish = 0;
+
+
     /**
      * Game constructor.
      *
@@ -37,6 +44,7 @@ public class Game {
      * @throws Exception If something goes wrong when loading map configuration file
      */
     public Game(String configFile) throws Exception {
+        this.observers = new ArrayList<>();
         this.configFile = configFile;
         Config c = this.loadConfiguration();
         Board.getInstance().setWind(new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath()));
@@ -57,18 +65,23 @@ public class Game {
      * Start the game's thread
      */
     public void start() {
+        tStart = clock.millis();
+
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(Board.getInstance().getWind().determinateSpeed(boat.getAngle().getValue()));
-                if (testBuoyCollision()) {
-                    System.exit(11);
-                } else if (testCoastCollision()) {
-                    System.exit(12);
+                if (testBuoyCollision() || testCoastCollision() || testBoatExitWindow()) {
+                    notifyObservers(false, 0);
+                    stop();
                 } else if (testCheckpoint(order)) {
                     order++;
-                    // TODO gérer le cas où order > taille arraylist --> victoire
+                    if (order >= Board.getInstance().getCheckpoints().size()) {
+                        tFinish = clock.millis();
+                        notifyObservers(true, 1000 - (tFinish - tStart) / 1000);
+                        stop();
+                    }
                 }
             }
         };
@@ -87,6 +100,20 @@ public class Game {
                 if (Coordinate.distance(c, b.getPosition()) <= b.getRadius()) {
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Test if any of the boat border exit the window
+     *
+     * @return True if the boat exit the window
+     */
+    public boolean testBoatExitWindow() {
+        for (Coordinate c : boat.getBorders().getPoints()) {
+            if (c.getX() < 0 || c.getX() > 1310 || c.getY() < 0 || c.getY() > 983) {
+                return true;
             }
         }
         return false;
@@ -137,7 +164,7 @@ public class Game {
      *
      * @param bo The Observer
      */
-    public void setObserver(BoatObserver bo) {
+    public void setBoatObserver(BoatObserver bo) {
         this.boat.addObserver(bo);
     }
 
@@ -155,11 +182,11 @@ public class Game {
     private void checkConfigValidity(Config c) throws Exception {
         // Check file
         if (c == null) {
-            throw new Exception(ResourceBundle.getBundle("error.config_load_error").toString());
+            throw new Exception(this.bundle.getString("error.config_load_error"));
         }
         // Check boat position
         if (c.getStartingPoint().getX() < 0 || c.getStartingPoint().getY() < 0) {
-            throw new Exception(ResourceBundle.getBundle("error.invalid_start_coordinate").toString());
+            throw new Exception(this.bundle.getString("error.invalid_start_coordinate"));
         }
         // Check wind strength
         boolean isStrengthValid = false;
@@ -170,7 +197,28 @@ public class Game {
             }
         }
         if (!isStrengthValid) {
-            throw new Exception(ResourceBundle.getBundle("error.invalid_wind_strength").toString());
+            throw new Exception(this.bundle.getString("error.invalid_wind_strength"));
+        }
+    }
+
+    @Override
+    public void addObserver(GameObserver go) {
+        this.observers.add(go);
+    }
+
+    @Override
+    public void removeObserver(GameObserver go) {
+        this.observers.remove(go);
+    }
+
+    @Override
+    public void notifyObservers(boolean win, long score) {
+        for (GameObserver go : this.observers) {
+            if (win) {
+                go.win(score);
+            } else {
+                go.lose();
+            }
         }
     }
 }
