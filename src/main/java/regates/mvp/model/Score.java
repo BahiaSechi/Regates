@@ -16,9 +16,7 @@ import java.util.Locale;
  * @version 1.0
  */
 @AllArgsConstructor
-@Setter
 @Getter
-
 public class Score {
 
     private String player;
@@ -42,7 +40,6 @@ public class Score {
 
     @Override
     public String toString() {
-        // TODO work on proper formatting data
-        return player + "\t\t\t" + value + "\t\t\t" + new SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH).format(date);
+        return String.format("%s\t\t\t%s\t\t\t%s", player, value, new SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH).format(date));
     }
 }

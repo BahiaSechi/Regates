@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-
+@EqualsAndHashCode
 public class Coordinate {
     private double x;
     private double y;
