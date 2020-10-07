@@ -6,17 +6,17 @@ startingPoint:
 buoys:
   - position:
       x: 464.0
-      y: 51.0
-    radius: 50.0
+      y: 130.0
+    radius: 40.0
   - position:
-      x: 118.0
-      y: 270.0
-    radius: 50.0
+      x: 200.0
+      y: 300.0
+    radius: 40.0
 
   - position:
       x: 464.0
-      y: 479.0
-    radius: 50.0
+      y: 540.0
+    radius: 40.0
 
 # Détermine les coordonnées et le rayon des checkpoints, le dernier checkpoint étant la ligne d'arrivée
 checkpoints:
@@ -37,30 +37,35 @@ checkpoints:
     order: 3
   - position:
       x: 464
-      y: 550
-    radius: 5.0
+      y: 580
+    radius: 20.0
     order: 4
   - position:
       x: 600
       y: 270
-    radius: 5.0
+    radius: 20.0
     order: 5
   - position:
       x: 464
       y: 30
-    radius: 5.0
+    radius: 20.0
     order: 6
   - position:
       x: 464
-      y: 550
-    radius: 5.0
+      y: 580
+    radius: 20.0
     order: 7
+  - position:
+      x: 700
+      y: 130
+    radius: 20.0
+    order: 8
 
 # Liste de points correspondant à la côte
 coasts:
   - imgPath: "regates/mvp/img/coast/coast.png"
     position:
-      x: 1120
+      x: 1100
       y: 400
     size:
       x: 445
@@ -68,4 +73,4 @@ coasts:
 
 # Indique la direction et la force du vent
 windDirection: 0
-windStrength: 6
+windStrength: 20
