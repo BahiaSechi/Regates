@@ -31,8 +31,8 @@ public class Wind {
 
     /**
      * Determine the speed of the boat according to wind strength and angle
-     *
-     * * @return Boat Speed
+     * @param angle The angle of the boat
+     * @return Boat Speed
      */
     public double determinateSpeed(int angle) {
         String[] speedByAngle = this.fileContent[Math.abs(angle % 180)].split(" "); // Extract the line matching the angle
