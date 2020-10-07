@@ -1,4 +1,4 @@
-package regates.mvp.vue;
+package regates.mvp.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
