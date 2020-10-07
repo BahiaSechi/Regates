@@ -10,27 +10,32 @@ import regates.mvp.model.boat.BoatObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
 
-    private Timer t;
+    private Timer timer;
     private final Boat boat;
-    private Config config;
+    private final Wind wind;
 
     @Getter
     private int order = 0;
 
-    public Game() {
-        this.loadConfiguration();
-        this.boat = new Boat(new SimpleIntegerProperty(0), config.getStartingPoint());
+    public Game() throws Exception {
+        Config c = this.loadConfiguration();
+        this.wind = new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath());
+        this.checkConfigValidity(c);
+
+        this.wind.setStrength(c.getWindStrength());
+        this.boat = new Boat(new SimpleIntegerProperty(1), c.getStartingPoint());
+
         Board b = Board.getInstance();
-        b.setCheckpoints(this.config.getCheckpoints());
-        b.setBuoys(this.config.getBuoys());
-        b.setCoasts(this.config.getCoasts());
-        b.setWindDirection(this.config.getWindDirection());
-        b.setWindSpeed(this.config.getWindStrength());
+        b.setCheckpoints(c.getCheckpoints());
+        b.setBuoys(c.getBuoys());
+        b.setCoasts(c.getCoasts());
+        b.setWind(this.wind);
     }
 
     public void start() {
@@ -38,7 +43,7 @@ public class Game {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
-                boat.move(4);
+                boat.move(wind.determinateSpeed(boat.getAngle().getValue()));
                 if (testBuoyCollision()) {
                     System.exit(11);
                 } else if (testCoastCollision()) {
@@ -49,8 +54,8 @@ public class Game {
                 }
             }
         };
-        t = new Timer();
-        t.scheduleAtFixedRate(tt, 0, 100);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(tt, 0, 100);
     }
 
     public boolean testBuoyCollision() {
@@ -86,8 +91,8 @@ public class Game {
     }
 
     public void stop() {
-        t.cancel();
-        t.purge();
+        timer.cancel();
+        timer.purge();
     }
 
     public Boat getBoat() {
@@ -98,14 +103,36 @@ public class Game {
         this.boat.addObserver(bo);
     }
 
-    private void loadConfiguration() {
+    private Config loadConfiguration() {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         try {
-            this.config = mapper.readValue(new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("regates/mvp/configFiles/conf_normandie.yaml")).getPath()), Config.class);
+            return mapper.readValue(new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("regates/mvp/configFiles/conf_normandie.yaml")).getPath()), Config.class);
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
+            return null;
+        }
+    }
+
+    private void checkConfigValidity(Config c) throws Exception {
+        // Check file
+        if (c == null) {
+            throw new Exception(ResourceBundle.getBundle("error.config_load_error").toString());
+        }
+        // Check boat position
+        if (c.getStartingPoint().getX() < 0 || c.getStartingPoint().getY() < 0) {
+            throw new Exception(ResourceBundle.getBundle("error.invalid_start_coordinate").toString());
+        }
+        // Check wind strength
+        boolean isStrengthValid = false;
+        for (int strength : this.wind.getAvailableStrengths()) {
+            if (strength == c.getWindStrength()) {
+                isStrengthValid = true;
+                break;
+            }
+        }
+        if (!isStrengthValid) {
+            throw new Exception(ResourceBundle.getBundle("error.invalid_wind_strength").toString());
         }
     }
 }
