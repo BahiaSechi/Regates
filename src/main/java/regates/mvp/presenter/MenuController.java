@@ -62,7 +62,7 @@ public class MenuController {
 
     public void displayLeader() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/MapView.fxml"), bundle);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/LeaderView.fxml"), bundle);
             Parent root3 = fxmlLoader.load();
             Scene scene = new Scene(root3, 1310, 983);
             Stage stage = new Stage();

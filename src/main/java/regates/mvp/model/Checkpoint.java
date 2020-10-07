@@ -6,13 +6,11 @@ import lombok.NonNull;
 
 @Getter
 public class Checkpoint {
-    @NonNull
     private final int order;
 
     @NonNull
     private final Coordinate position;
 
-    @NonNull
     private final double radius;
 
 
