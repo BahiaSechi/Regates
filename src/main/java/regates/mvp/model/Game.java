@@ -14,11 +14,14 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Represent the main class of the game. Contain the thread responsible for collision, movement and end of the game.
+ */
 public class Game {
 
     private Timer timer;
+    @Getter
     private final Boat boat;
-    private final Wind wind;
 
     @Getter
     @Setter
@@ -27,28 +30,38 @@ public class Game {
     @Getter
     private int order = 0;
 
+    /**
+     * Game constructor.
+     *
+     * @param configFile The path to the map configuration file.
+     * @throws Exception If something goes wrong when loading map configuration file
+     */
     public Game(String configFile) throws Exception {
         this.configFile = configFile;
         Config c = this.loadConfiguration();
-        this.wind = new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath());
+        Board.getInstance().setWind(new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath()));
         this.checkConfigValidity(c);
 
-        this.wind.setStrength(c.getWindStrength());
+        Board.getInstance().getWind().setStrength(c.getWindStrength());
+
         this.boat = new Boat(new SimpleIntegerProperty(1), c.getStartingPoint());
 
         Board b = Board.getInstance();
         b.setCheckpoints(c.getCheckpoints());
         b.setBuoys(c.getBuoys());
         b.setCoasts(c.getCoasts());
-        b.setWind(this.wind);
+        b.setWind(Board.getInstance().getWind());
     }
 
+    /**
+     * Start the game's thread
+     */
     public void start() {
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
-                boat.move(wind.determinateSpeed(boat.getAngle().getValue()));
+                boat.move(Board.getInstance().getWind().determinateSpeed(boat.getAngle().getValue()));
                 if (testBuoyCollision()) {
                     System.exit(11);
                 } else if (testCoastCollision()) {
@@ -63,6 +76,11 @@ public class Game {
         timer.scheduleAtFixedRate(tt, 0, 100);
     }
 
+    /**
+     * Test if any of the boat border hit any of the Buoy border
+     *
+     * @return True if the boat hit the Buoy
+     */
     public boolean testBuoyCollision() {
         for (Coordinate c : boat.getBorders().getPoints()) {
             for (Buoy b : Board.getInstance().getBuoys()) {
@@ -74,6 +92,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Test if any of the boat border hit any of the Coast border
+     *
+     * @return True if the boat hit the Coast
+     */
     public boolean testCoastCollision() {
         for (Coast c : Board.getInstance().getCoasts()) {
             for (Coordinate coo : c.getBorders().getPoints()) {
@@ -85,6 +108,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Test if the boat is in the Checkpint
+     *
+     * @return True if the boat hit the checkpoint
+     */
     public boolean testCheckpoint(int order) {
         for (Coordinate c : boat.getBorders().getPoints()) {
             if (Coordinate.distance(c, Board.getInstance().getCheckpoints().get(order).getPosition()) <= Board.getInstance().getCheckpoints().get(order).getRadius()) {
@@ -95,15 +123,19 @@ public class Game {
         return false;
     }
 
+    /**
+     * Stop the Thread of the game
+     */
     public void stop() {
         timer.cancel();
         timer.purge();
     }
 
-    public Boat getBoat() {
-        return this.boat;
-    }
-
+    /**
+     * Set the game's observer (The controller actually)
+     *
+     * @param bo The Observer
+     */
     public void setObserver(BoatObserver bo) {
         this.boat.addObserver(bo);
     }
@@ -130,7 +162,7 @@ public class Game {
         }
         // Check wind strength
         boolean isStrengthValid = false;
-        for (int strength : this.wind.getAvailableStrengths()) {
+        for (int strength : Board.getInstance().getWind().getAvailableStrengths()) {
             if (strength == c.getWindStrength()) {
                 isStrengthValid = true;
                 break;

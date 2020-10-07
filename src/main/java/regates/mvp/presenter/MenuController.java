@@ -18,6 +18,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * The menu view's controller. Aim to handled event when starting a game, change a map, exit the program.
+ */
 public class MenuController implements Initializable {
 
     private final ResourceBundle bundle = ResourceBundle.getBundle("regates.mvp.MessageBundle", new Locale("fr", "FR"));
@@ -31,6 +34,9 @@ public class MenuController implements Initializable {
         Platform.exit();
     }
 
+    /**
+     * Open the changing map view
+     */
     public void chooseMap() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/MapView.fxml"), bundle);
@@ -51,6 +57,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Open the game view
+     */
     public void playGame() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/BoardView.fxml"), bundle);
@@ -66,12 +75,15 @@ public class MenuController implements Initializable {
             stage.setResizable(false);
             stage.requestFocus();
             stage.show();
-            stage.setOnCloseRequest(event-> bc.exitGame());
+            stage.setOnCloseRequest(event -> bc.exitGame());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Display the leaderboard
+     */
     public void displayLeader() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/regates/mvp/LeaderView.fxml"), bundle);
@@ -89,7 +101,12 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void editImage(String imgPath) {
+    /**
+     * Set the menu image according to the map loaded
+     *
+     * @param imgPath The path to the image
+     */
+    void editImage(String imgPath) {
         this.imgGame.setImage(
                 new Image(
                         Objects.requireNonNull(

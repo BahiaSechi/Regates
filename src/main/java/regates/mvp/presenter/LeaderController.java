@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * The Leaderboard view's controller. Aim to print scores in ListView.
+ */
 public class LeaderController implements Initializable {
 
     @FXML

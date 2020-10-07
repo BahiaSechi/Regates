@@ -4,21 +4,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+/**
+ * Represent a coast. Boat have to avoid it.
+ * @see Coordinate
+ * @see Border
+ */
+@Getter
 public class Coast {
 
-    @Getter
     private final String imgPath;
-
-    @Getter
     private final Coordinate position;
-
-    @Getter
     private final Coordinate size;
 
-    @Getter
     @JsonIgnore
     private final Border borders;
 
+    /**
+     * Coast constructor.
+     * @param position The position of the coast (Barycenter's position)
+     * @param imgPath The path of the coast's image
+     * @param size The size of coast
+     */
     public Coast(
             @JsonProperty("position") Coordinate position,
             @JsonProperty("imgPath") String imgPath,

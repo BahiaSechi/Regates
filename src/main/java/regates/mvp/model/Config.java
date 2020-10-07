@@ -7,6 +7,14 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Represent the configuration of map. Used when loading a new map to link data with Jackson.
+ *
+ * @see Coordinate
+ * @see Buoy
+ * @see Checkpoint
+ * @see Coast
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
