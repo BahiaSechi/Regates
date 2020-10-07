@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.effect.BoxBlur?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="951.0" prefWidth="1167.0" vgap="10"
-          xmlns="http://javafx.com/javafx/8.0.212" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="regates.mvp.presenter.BoardController">
+<?import javafx.scene.effect.BoxBlur?>
+<GridPane alignment="center" hgap="10" prefHeight="983.0" prefWidth="1310.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
     <columnConstraints>
         <ColumnConstraints/>
     </columnConstraints>
@@ -39,13 +29,13 @@
         <center>
             <AnchorPane fx:id="gameBoard" prefHeight="669.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
                 <ImageView fitHeight="709.0" fitWidth="1310.0" pickOnBounds="true">
-                    <Image url="@img/lightblue.jpg"/>
+                    <Image url="@img/map/lightblue.jpg"/>
                 </ImageView>
                 <Label fx:id="labelCheckpoint" contentDisplay="CENTER" layoutX="524.0" layoutY="30.0" opacity="0.34"
                        text="1" textAlignment="CENTER"/>
                 <ImageView fx:id="regate" fitHeight="56.0" fitWidth="45.0" layoutX="567.0" layoutY="486.0"
                            pickOnBounds="true" preserveRatio="true">
-                    <Image url="@img/ship.png"/>
+                    <Image url="@img/map/ship.png"/>
                 </ImageView>
                 <Circle id="buoy_1" fx:id="nextCheckpoint" fill="#1f93ff00" layoutX="528.0" layoutY="38.0"
                         radius="37.0" stroke="#ff9000" strokeLineCap="ROUND" strokeWidth="2.0">
@@ -58,11 +48,11 @@
         <bottom>
             <AnchorPane maxHeight="-Infinity" prefHeight="178.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
                 <ImageView fitHeight="273.0" fitWidth="1310.0" layoutX="-2.0" pickOnBounds="true">
-                    <Image url="@img/chene.jpg"/>
+                    <Image url="@img/dashboard/chene.jpg"/>
                 </ImageView>
                 <ImageView fx:id="imgWheel" fitHeight="260.0" fitWidth="265.0" layoutX="596.0" layoutY="3.0"
                            pickOnBounds="true" preserveRatio="true">
-                    <Image url="@img/gouv.png"/>
+                    <Image url="@img/dashboard/gouv.png"/>
                 </ImageView>
                 <Label fx:id="txtStrength" layoutX="984.0" layoutY="97.0" prefHeight="25.0" prefWidth="153.0"
                        style="-fx-background-color: white; -fx-padding: 4px;" text="Label"/>
@@ -94,12 +84,12 @@
                 </Label>
                 <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true"
                            preserveRatio="true">
-                    <Image url="@img/wind.png"/>
+                    <Image url="@img/dashboard/wind.png"/>
                 </ImageView>
 
                 <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true"
                            preserveRatio="true">
-                    <Image url="@img/wind_direction.png"/>
+                    <Image url="@img/dashboard/wind_direction.png"/>
                 </ImageView>
             </AnchorPane>
         </bottom>
