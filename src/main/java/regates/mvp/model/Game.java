@@ -183,7 +183,7 @@ public class Game implements GameObservable {
         }
     }
 
-    private void checkConfigValidity(Config c) throws Exception {
+    public void checkConfigValidity(Config c) throws Exception {
         // Check file
         if (c == null) {
             throw new Exception(this.bundle.getString("error.config_load_error"));

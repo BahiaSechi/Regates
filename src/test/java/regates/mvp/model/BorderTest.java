@@ -28,6 +28,7 @@ public class BorderTest {
         Coordinate expected = new Coordinate(16, 14);
         Assert.assertEquals(expected.getY(), b.getPoints().get(0).getY(), 1);
         Assert.assertEquals(expected.getX(), b.getPoints().get(0).getX(), 1);
+        Assert.assertFalse(b.isInRotation());
     }
 
 

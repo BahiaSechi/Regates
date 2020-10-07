@@ -1,0 +1,41 @@
+#Détermine les coordonnées de départ de la régate
+startingPoint:
+  x: 600.0
+  y: 550.0
+# Détermine les coordonnées des bouées
+buoys:
+  - position:
+      x: 100.0
+      y: 500.0
+    radius: 40.0
+  - position:
+      x: 1100.0
+      y: 500.0
+    radius: 40.0
+
+# Détermine les coordonnées et le rayon des checkpoints, le dernier checkpoint étant la ligne d'arrivée
+checkpoints:
+  - position:
+      x: 600
+      y: 270
+    radius: 20.0
+    order: 1
+  - position:
+      x: 600
+      y: 50
+    radius: 20.0
+    order: 2
+
+# Liste de points correspondant à la côte
+coasts:
+  - imgPath: "regates/mvp/img/coast/custom.png"
+    position:
+      x: 650
+      y: 200
+    size:
+      x: 800
+      y: 600
+
+# Indique la direction et la force du vent
+windDirection: 0
+windStrength: 1
