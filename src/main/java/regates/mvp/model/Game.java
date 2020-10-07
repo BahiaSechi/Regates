@@ -2,7 +2,9 @@ package regates.mvp.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Alert;
 import lombok.Getter;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
@@ -39,13 +41,23 @@ public class Game {
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
-                if (testBuoyCollision()) {
-                    System.exit(11);
-                } else if (testCoastCollision()) {
-                    System.exit(12);
+                if (testBuoyCollision()||testCoastCollision()) {
+
+                    Platform.runLater(() -> {
+                        Alert about = new Alert(Alert.AlertType.INFORMATION);
+                        about.setContentText("eng game collision");
+                        about.setTitle("end game");
+                        about.showAndWait();
+                        Platform.exit();
+                    });
+                    t.cancel();
+                    t.purge();
+
                 } else if (testCheckpoint(order)) {
                     order++;
-                    // TODO gérer le cas où order > taille arraylist --> victoire
+                    if(order==Board.getInstance().getCheckpoints().size()){
+                        // TODO gérer le cas où order > taille arraylist --> victoire
+                    }
                 }
             }
         };
