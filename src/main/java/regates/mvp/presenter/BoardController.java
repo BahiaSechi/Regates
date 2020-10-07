@@ -2,10 +2,8 @@ package regates.mvp.presenter;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,11 +18,17 @@ import regates.mvp.model.*;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
 
-import javax.xml.transform.Result;
-import java.net.URL;
 import java.util.*;
 
-public class BoardController implements Initializable, BoatObserver {
+/**
+ * Link between Model and View
+ * Handle players interactions and dynamic display
+ * @see Boat
+ * @see Border
+ * @see Coast
+ * @see Coordinate
+ */
+public class BoardController implements BoatObserver {
     @FXML
     ImageView regate;
     @FXML
@@ -44,7 +48,6 @@ public class BoardController implements Initializable, BoatObserver {
     @FXML
     Circle nextCheckpoint;
 
-    private String configPath;
     private Game game;
     // Debug display
     private List<Rectangle> r;
@@ -53,6 +56,10 @@ public class BoardController implements Initializable, BoatObserver {
     // Debug display
 
 
+    /**
+     * Define the scene key listeners
+     * @param scene Game scene
+     */
     public void setScene(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {
@@ -64,17 +71,13 @@ public class BoardController implements Initializable, BoatObserver {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    @Override
     public void update(Boat boat) {
-
         Platform.runLater(() -> {
+            // Display the boat
             regate.setLayoutX(boat.getPosition().getX() - boat.getBorders().getImgShift().getX());
             regate.setLayoutY(boat.getPosition().getY() - boat.getBorders().getImgShift().getY());
 
+            // Display the checkpoint
             Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
             AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
             AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
@@ -138,9 +141,13 @@ public class BoardController implements Initializable, BoatObserver {
         Platform.exit();
     }
 
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
+    /**
+     * Start the game
+     * @param configPath Absolute path of the map configuration file
+     */
+    public void startGame(String configPath) {
         try {
+            // Load the game
             this.game = new Game(configPath);
         } catch (Exception e) {
             Alert error = new Alert(Alert.AlertType.ERROR);
@@ -151,10 +158,13 @@ public class BoardController implements Initializable, BoatObserver {
         }
 
         this.game.setObserver(this);
+
+        // Rotate boat and wheel according to player rotation
         game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
             regate.setRotate(newValue.doubleValue());
             imgWheel.setRotate(newValue.doubleValue());
         });
+        // Generate collision borders for boat
         game.getBoat().getBorders().generateBordersForImage(
                 regate.getImage(),
                 regate.getFitWidth(),
@@ -176,6 +186,7 @@ public class BoardController implements Initializable, BoatObserver {
             buoy.setLayoutX(b.getPosition().getX() - buoy.getFitWidth() / 2);
             buoy.setLayoutY(b.getPosition().getY() - buoy.getFitHeight() / 2);
 
+            // Draw buoys radius
             Circle buoyRadius = new Circle();
             buoyRadius.setRadius(b.getRadius());
             buoyRadius.setStroke(Color.BLACK);
@@ -203,11 +214,11 @@ public class BoardController implements Initializable, BoatObserver {
             coastIV.setLayoutX(coast.getPosition().getX() - coast.getBorders().getImgShift().getX());
             coastIV.setLayoutY(coast.getPosition().getY() - coast.getBorders().getImgShift().getY());
             this.gameBoard.getChildren().add(coastIV);
-
-            this.txtStrength.setText(Board.getInstance().getWind().getStrength() + " nd");
-            this.txtWind.setText(Board.getInstance().getWind().getDirection() + " °");
-            game.start();
         }
+
+        this.txtStrength.setText(Board.getInstance().getWind().getStrength() + " nd");
+        this.txtWind.setText(Board.getInstance().getWind().getDirection() + " °");
+        game.start();
 
         // TODO add debug config
         if (true) {

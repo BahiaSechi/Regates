@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Represent the Leaderboard of a game
- *
+ * @see Score
  */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

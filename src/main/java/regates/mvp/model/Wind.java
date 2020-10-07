@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import regates.mvp.model.utils.FileReader;
 
+/**
+ * Represents the wind in the game
+ */
 public class Wind {
     private final String[] fileContent;
     @Getter
@@ -15,6 +18,10 @@ public class Wind {
     @Setter
     private int direction;
 
+    /**
+     * Wind constructor
+     * @param path Absolute path to wind data file
+     */
     public Wind(String path) {
         this.fileContent = FileReader.readFile(path);
         this.availableStrengths = new int[this.fileContent[0].split(" ").length - 1];

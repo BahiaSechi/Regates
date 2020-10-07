@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Program entry point
+ */
 public class MenuView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {

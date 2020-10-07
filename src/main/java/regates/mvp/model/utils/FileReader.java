@@ -14,6 +14,11 @@ import java.util.Scanner;
 @Log
 public class FileReader {
 
+    /**
+     * Read a file
+     * @param path Absolute path of the file
+     * @return Array of lines
+     */
     public static String[] readFile(String path) {
         List<String> content = new ArrayList<>();
 

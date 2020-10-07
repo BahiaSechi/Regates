@@ -23,6 +23,12 @@ public class Border {
         this.points = new ArrayList<>();
     }
 
+    /**
+     * Identify each point part of the boat borders and store it as a List of Coordinates
+     * @param img Boat image
+     * @param width Image display width
+     * @param height Image display height
+     */
     public void generateBordersForImage(Image img, double width, double height) {
         int nbPoints = 0;
         double wRatio = width / img.getWidth();
@@ -38,6 +44,7 @@ public class Border {
                     nbPoints++;
                 }
 
+        // Move each border point around barycenter
         this.imgShift = this.barycentreCalculation();
         for (Coordinate c : this.points) {
             c.setX(c.getX() - imgShift.getX());
@@ -46,6 +53,10 @@ public class Border {
         this.translateBorders();
     }
 
+    /**
+     * Calculate barycenter position
+     * @return Barycenter position as a Coordinate
+     */
     private Coordinate barycentreCalculation() {
         double moyX = 0;
         double moyY = 0;
@@ -56,8 +67,13 @@ public class Border {
         return new Coordinate(moyX / this.points.size(), moyY / this.points.size());
     }
 
+    /**
+     * Rotate every border points matching boat angle
+     * @param angle Boat angle
+     */
     public void rotate(double angle) {
-        resetTranslation();
+        resetTranslation(); // Place borders at origin
+        // Rotate around origin
         for (Coordinate c : this.points) {
             double radAngle = Math.toRadians(angle);
             double cosAngle = Math.round(Math.cos(radAngle));
@@ -65,9 +81,12 @@ public class Border {
             c.setX(c.getX() * cosAngle + c.getY() * sinAngle);
             c.setY(-c.getX() * sinAngle + c.getY() * cosAngle);
         }
-        translateBorders();
+        translateBorders(); // Place back borders
     }
 
+    /**
+     * Move each border point relatively to barycenter
+     */
     public void translateBorders() {
         for (Coordinate c : this.points) {
             c.setX(c.getX() + barycentre.getX());
@@ -75,6 +94,9 @@ public class Border {
         }
     }
 
+    /**
+     * Translate every border point to origin
+     */
     public void resetTranslation() {
         for (Coordinate c : this.points) {
             c.setX(c.getX() - barycentre.getX());
@@ -82,6 +104,13 @@ public class Border {
         }
     }
 
+    /**
+     * Check if pixel has a transparent neighbour
+     * @param bi Image
+     * @param x Pixel X position
+     * @param y Pixel Y position
+     * @return true if neighbour is transparent
+     */
     private boolean hasTransparentNeighbour(Image bi, int x, int y) {
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
@@ -95,6 +124,13 @@ public class Border {
         return false;
     }
 
+    /**
+     * Check if a pixel is transparent
+     * @param bi Image
+     * @param x Pixel X position
+     * @param y Pixel Y position
+     * @return true if pixel is transparent
+     */
     private boolean isTransparent(Image bi, int x, int y) {
         int pixel = bi.getPixelReader().getArgb(x, y);
         return (pixel >> 24) == 0x00;
