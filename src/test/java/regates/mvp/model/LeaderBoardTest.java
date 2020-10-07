@@ -13,14 +13,14 @@ public class LeaderBoardTest {
     private List<Score> trie;
 
     @Before
-    public void init(){
+    public void init() {
         l = Leaderboard.getInstance();
         scores = new ArrayList<>();
         trie = new ArrayList<>();
     }
 
     @Test
-    public void sortByDateTest(){
+    public void sortByDateTest() {
         l.readScore("score/score.txt");
         scores = l.getScores();
         l.readScore("score/scoreDate.txt");
@@ -30,7 +30,7 @@ public class LeaderBoardTest {
     }
 
     @Test
-    public void sortByScoreTest(){
+    public void sortByScoreTest() {
         l.readScore("score/score.txt");
         scores = l.getScores();
         l.readScore("score/scoreScore.txt");
@@ -40,7 +40,7 @@ public class LeaderBoardTest {
     }
 
     @Test
-    public void sortByNameTest(){
+    public void sortByNameTest() {
         l.readScore("score/score.txt");
         scores = l.getScores();
         l.readScore("score/scoreName.txt");
