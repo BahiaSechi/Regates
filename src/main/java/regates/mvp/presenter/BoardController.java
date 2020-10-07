@@ -6,49 +6,50 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import lombok.Getter;
+import regates.mvp.model.Coordinate;
+import regates.mvp.model.Game;
 import regates.mvp.model.*;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
-import regates.mvp.model.Coordinate;
-import regates.mvp.model.Game;
 
 import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class BoardController implements Initializable, BoatObserver {
     @FXML
-    @Getter
     ImageView regate;
     @FXML
-    Label txtCap, txtStrength, txtSpeed, txtWind;
+    Label txtCap;
+    @FXML
+    Label txtStrength;
+    @FXML
+    Label txtSpeed;
+    @FXML
+    Label txtWind;
     @FXML
     ImageView imgWheel;
-
     @FXML
     AnchorPane gameBoard;
-
-
     @FXML
     Label labelCheckpoint;
-
     @FXML
     Circle nextCheckpoint;
 
-
     private Game game;
-
     // Debug display
     private List<Rectangle> r;
+    private List<Rectangle> r2;
     private final Circle c = new Circle();
     // Debug display
 
@@ -66,6 +67,7 @@ public class BoardController implements Initializable, BoatObserver {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.game = new Game();
+
         this.game.setObserver(this);
         game.getBoat().getAngle().addListener((o, oldValue, newValue) -> {
             regate.setRotate(newValue.doubleValue());
@@ -76,17 +78,73 @@ public class BoardController implements Initializable, BoatObserver {
                 regate.getFitWidth(),
                 regate.getFitHeight()
         );
-        game.start();
+
+        // Draw buoys
+        for (Buoy b : Board.getInstance().getBuoys()) {
+            ImageView buoy = new ImageView();
+            buoy.setImage(
+                    new Image(
+                            Objects.requireNonNull(
+                                    Thread.currentThread().getContextClassLoader().getResourceAsStream("regates/mvp/img/buoy.png")
+                            )
+                    )
+            );
+            buoy.setFitHeight(67);
+            buoy.setFitWidth(66);
+            buoy.setLayoutX(b.getPosition().getX() - buoy.getFitWidth() / 2);
+            buoy.setLayoutY(b.getPosition().getY() - buoy.getFitHeight() / 2);
+
+            Circle buoyRadius = new Circle();
+            buoyRadius.setRadius(b.getRadius());
+            buoyRadius.setStroke(Color.BLACK);
+            buoyRadius.setStrokeWidth(3);
+            buoyRadius.setCenterX(b.getPosition().getX());
+            buoyRadius.setCenterY(b.getPosition().getY());
+            buoyRadius.setFill(new Color(0, 0, 0, 0));
+            this.gameBoard.getChildren().add(buoy);
+            this.gameBoard.getChildren().add(buoyRadius);
+        }
+
+        // Draw coasts
+        for (Coast coast : Board.getInstance().getCoasts()) {
+            ImageView coastIV = new ImageView();
+            coastIV.setImage(
+                    new Image(
+                            Objects.requireNonNull(
+                                    Thread.currentThread().getContextClassLoader().getResourceAsStream(coast.getImgPath())
+                            )
+                    )
+            );
+            coastIV.setFitWidth(coast.getSize().getX());
+            coastIV.setFitHeight(coast.getSize().getY());
+            coast.getBorders().generateBordersForImage(coastIV.getImage(), coastIV.getFitWidth(), coastIV.getFitHeight());
+            coastIV.setLayoutX(coast.getPosition().getX() - coast.getBorders().getImgShift().getX());
+            coastIV.setLayoutY(coast.getPosition().getY() - coast.getBorders().getImgShift().getY());
+            this.gameBoard.getChildren().add(coastIV);
+
+            this.txtStrength.setText(Board.getInstance().getWindSpeed() + " nd");
+            this.txtWind.setText(Board.getInstance().getWindDirection() + " °");
+            game.start();
+        }
 
         // TODO add debug config
         if (true) {
             r = new ArrayList<>();
+            r2 = new ArrayList<>();
             for (Coordinate ignored : game.getBoat().getBorders().getPoints()) {
                 Rectangle rec = new Rectangle();
                 rec.setWidth(1);
                 rec.setHeight(1);
                 rec.setFill(Color.RED);
                 this.r.add(rec);
+                this.gameBoard.getChildren().add(rec);
+            }
+            for (Coordinate ignored : Board.getInstance().getCoasts().get(0).getBorders().getPoints()) {
+                Rectangle rec = new Rectangle();
+                rec.setWidth(1);
+                rec.setHeight(1);
+                rec.setFill(Color.RED);
+                this.r2.add(rec);
                 this.gameBoard.getChildren().add(rec);
             }
             c.resize(10, 10);
@@ -118,10 +176,16 @@ public class BoardController implements Initializable, BoatObserver {
                 c.setLayoutX(boat.getBorders().getBarycentre().getX());
                 c.setLayoutY(boat.getBorders().getBarycentre().getY());
 
-                // Borders
+                // Boat Borders
                 for (int j = 0; j < game.getBoat().getBorders().getPoints().size(); j++) {
                     this.r.get(j).setLayoutX(game.getBoat().getBorders().getPoints().get(j).getX());
                     this.r.get(j).setLayoutY(game.getBoat().getBorders().getPoints().get(j).getY());
+                }
+
+                // Coast Borders
+                for (int j = 0; j < Board.getInstance().getCoasts().get(0).getBorders().getPoints().size(); j++) {
+                    this.r2.get(j).setLayoutX(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getX());
+                    this.r2.get(j).setLayoutY(Board.getInstance().getCoasts().get(0).getBorders().getPoints().get(j).getY());
                 }
             }
         });

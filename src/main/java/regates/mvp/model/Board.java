@@ -1,35 +1,37 @@
 package regates.mvp.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Board {
 
-    @Getter
-    private ArrayList<Checkpoint> checkpoints = new ArrayList<>();
-
     private static Board board;
+
     @Getter
-    private ArrayList<Buoy> listBuoy = new ArrayList<>();
-
+    @Setter
+    private List<Checkpoint> checkpoints;
+    @Getter
+    @Setter
+    private List<Buoy> buoys;
+    @Getter
+    @Setter
+    private List<Coast> coasts;
     private int width; // fixé ?
-
     private int height;
-
-    private float windDirection;
-
+    @Getter
+    @Setter
+    private int windDirection;
+    @Getter
+    @Setter
     private int windSpeed;
-
     private Date timestamp;
 
 
     private Board() {
-        checkpoints.add(new Checkpoint(0, new Coordinate(200, 15), 30));
-        checkpoints.add(new Checkpoint(1, new Coordinate(500, 600), 30));
-        checkpoints.add(new Checkpoint(2, new Coordinate(50, 50), 3));
-        listBuoy.add(new Buoy(1, 4, new Coordinate(464, 51), "yolo"));
     }
 
     public static Board getInstance() {

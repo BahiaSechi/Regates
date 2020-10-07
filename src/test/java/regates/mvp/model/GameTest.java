@@ -12,8 +12,7 @@ public class GameTest {
         int before = Thread.activeCount();
         g.start();
         Assert.assertEquals(before + 1, Thread.activeCount());
-        g.getT().cancel();
-        g.getT().purge();
+        g.stop();
     }
 
     @Test
