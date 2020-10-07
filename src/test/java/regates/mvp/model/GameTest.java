@@ -30,7 +30,7 @@ public class GameTest {
         BoatObserver bo = boat -> {
         };
         Assert.assertEquals(0, g.getBoat().getBoatObservers().size());
-        g.setObserver(bo);
+        g.setBoatObserver(bo);
         Assert.assertEquals(1, g.getBoat().getBoatObservers().size());
     }
 
