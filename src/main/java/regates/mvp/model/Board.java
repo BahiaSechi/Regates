@@ -1,26 +1,30 @@
 package regates.mvp.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents The sea, with Checkpoints and Buoys. Handle Wind.
+ *
+ * @see Checkpoint
+ * @see Buoy
+ * @see Coast
+ * @see Wind
+ */
+@Getter
+@Setter
 public class Board {
-
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
     private static Board board;
 
-    @Getter
-    @Setter
     private List<Checkpoint> checkpoints;
-    @Getter
-    @Setter
     private List<Buoy> buoys;
-    @Getter
-    @Setter
     private List<Coast> coasts;
-    @Getter
-    @Setter
     private Wind wind;
 
     private Board() {
@@ -30,6 +34,12 @@ public class Board {
         wind = new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
 
+
+    /**
+     * Implementation of Singleton design pattern.
+     *
+     * @return The only instance of Board.
+     */
     public static Board getInstance() {
         if (board == null)
             board = new Board();
