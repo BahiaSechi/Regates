@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoardTest {
-    Leaderboard l;
-    List<Score> scores;
-    List<Score> trie;
+    private Leaderboard l;
+    private List<Score> scores;
+    private List<Score> trie;
 
     @Before
     public void init(){

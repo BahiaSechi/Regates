@@ -1,28 +1,93 @@
 package regates.mvp.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import javafx.beans.property.SimpleIntegerProperty;
+import lombok.Getter;
+import regates.mvp.model.boat.Boat;
+import regates.mvp.model.boat.BoatObserver;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
+
     private Timer t;
-    private TimerTask tt;
-    private String configurationFilename;
-    private Boat boat;
+    private final Boat boat;
+    private Config config;
+
+    @Getter
+    private int order = 0;
 
     public Game() {
-        this.boat = new Boat(new SimpleIntegerProperty(0), new Coordinate(200, 200));
-        tt = new TimerTask() {
+        this.loadConfiguration();
+        this.boat = new Boat(new SimpleIntegerProperty(0), config.getStartingPoint());
+        Board b = Board.getInstance();
+        b.setCheckpoints(this.config.getCheckpoints());
+        b.setBuoys(this.config.getBuoys());
+        b.setCoasts(this.config.getCoasts());
+        b.setWindDirection(this.config.getWindDirection());
+        b.setWindSpeed(this.config.getWindStrength());
+    }
+
+    public void start() {
+        TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 // Calcule des nouvelles coordonnées
                 boat.move(4);
-                boat.notifyObservers();
+                if (testBuoyCollision()) {
+                    System.exit(11);
+                } else if (testCoastCollision()) {
+                    System.exit(12);
+                } else if (testCheckpoint(order)) {
+                    order++;
+                    // TODO gérer le cas où order > taille arraylist --> victoire
+                }
             }
         };
         t = new Timer();
         t.scheduleAtFixedRate(tt, 0, 100);
+    }
+
+    public boolean testBuoyCollision() {
+        for (Coordinate c : boat.getBorders().getPoints()) {
+            for (Buoy b : Board.getInstance().getBuoys()) {
+                if (Coordinate.distance(c, b.getPosition()) <= b.getRadius()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean testCoastCollision() {
+        for (Coast c : Board.getInstance().getCoasts()) {
+            for (Coordinate coo : c.getBorders().getPoints()) {
+                if (boat.isCollision(coo)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean testCheckpoint(int order) {
+        for (Coordinate c : boat.getBorders().getPoints()) {
+            if (Coordinate.distance(c, Board.getInstance().getCheckpoints().get(order).getPosition()) <= Board.getInstance().getCheckpoints().get(order).getRadius()) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public void stop() {
+        t.cancel();
+        t.purge();
     }
 
     public Boat getBoat() {
@@ -33,8 +98,14 @@ public class Game {
         this.boat.addObserver(bo);
     }
 
-
-    public void launchGame(String s) {
-
+    private void loadConfiguration() {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.findAndRegisterModules();
+        try {
+            this.config = mapper.readValue(new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("regates/mvp/configFiles/conf_normandie.yaml")).getPath()), Config.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

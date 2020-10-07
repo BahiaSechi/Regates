@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="983.0" prefWidth="1310.0" style="-fx-background-color: #d5d5d5;" stylesheets="@MenuView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.MenuController">
+   <children>
+      <ImageView fitHeight="416.0" fitWidth="612.0" pickOnBounds="true" preserveRatio="true">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin></ImageView>
+      <Label id="playLabel" onMouseClicked="#playGame" text="%menu.playgame">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label id="mapLabel" onMouseClicked="#chooseMap" text="%menu.choose_map">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label id="leadLabel" layoutY="160.0" onMouseClicked="#displayLeader" text="%menu.leaderboard">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label id="exitLabel" layoutY="176.0" onMouseClicked="#handleExit" text="%menu.exit">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>
