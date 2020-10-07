@@ -8,9 +8,5 @@ public class BoardTest {
     public void testGetInstance() {
         Board b = Board.getInstance();
         Board c = Board.getInstance();
-
-        b.start();
-        b.testEnd();
-        //
     }
 }

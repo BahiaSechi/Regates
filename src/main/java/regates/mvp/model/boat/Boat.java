@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import regates.mvp.model.Border;
 import regates.mvp.model.Coordinate;
-import regates.mvp.model.utils.FileReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class Boat implements BoatObservable {
     /**
      * Move the boat according to its angle and speed
      *
-     * @param windStrength Wind Strength
+     * @param speed Speed according to wind strength
      */
     public synchronized void move(double speed) {
         try {

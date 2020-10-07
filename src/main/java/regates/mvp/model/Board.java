@@ -18,8 +18,6 @@ public class Board {
     @Getter
     @Setter
     private List<Coast> coasts;
-    private int width; // fixé ?
-    private int height;
     @Getter
     @Setter
     private Wind wind;

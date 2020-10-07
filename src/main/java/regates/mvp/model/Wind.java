@@ -2,7 +2,6 @@ package regates.mvp.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import regates.mvp.model.boat.Boat;
 import regates.mvp.model.utils.FileReader;
 
 public class Wind {
@@ -25,7 +24,6 @@ public class Wind {
                 int st = Integer.parseInt(this.fileContent[0].split(" ")[i]);
                 this.availableStrengths[tabIndex++] = st;
             } catch (Exception ignored) {
-
             }
         }
     }
