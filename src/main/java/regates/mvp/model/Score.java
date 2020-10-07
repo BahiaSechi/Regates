@@ -10,9 +10,6 @@ import java.util.Locale;
 
 /**
  * Represent the Score of a game
- *
- * @author Elise Le Mazier
- * @version 1.0
  */
 @AllArgsConstructor
 @Getter

@@ -9,22 +9,25 @@ import regates.mvp.model.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Player controllable boat
+ * @see Coordinate
+ * @see Border
+ */
 @Getter
 public class Boat implements BoatObservable {
-
-    @Setter
-    private static String[] boatSpeeds;
-
     private double speed;
-
     @Setter
     private IntegerProperty angle;
-
-    private final List<BoatObserver> boatObservers = new ArrayList<>();
-
     @Setter
     private Border borders;
+    private final List<BoatObserver> boatObservers = new ArrayList<>();
 
+    /**
+     * Boat constructor
+     * @param degree Initial orientation of the boat in degrees
+     * @param position Initial position of the boat
+     */
     public Boat(IntegerProperty degree, Coordinate position) {
         this.angle = degree;
         this.borders = new Border();
@@ -39,8 +42,8 @@ public class Boat implements BoatObservable {
      * @return true if colliding
      */
     public boolean isCollision(Coordinate a) {
-        for (Coordinate c : this.getBorders().getPoints()){
-            if(Coordinate.distance(c, a) < 1){
+        for (Coordinate c : this.getBorders().getPoints()) {
+            if (Coordinate.distance(c, a) < 1) {
                 return true;
             }
         }
@@ -56,7 +59,7 @@ public class Boat implements BoatObservable {
         try {
             this.borders.resetTranslation();
             this.speed = speed;
-            double a = angle.getValue() - 90;
+            double a = angle.getValue() - 90.0;
             double adj = speed * Math.cos(Math.toRadians(a));
             double opp = speed * Math.sin(Math.toRadians(a));
             this.borders.setBarycentre(new Coordinate(this.borders.getBarycentre().getX() + adj, this.borders.getBarycentre().getY() + opp));
@@ -74,37 +77,30 @@ public class Boat implements BoatObservable {
      */
     public synchronized void rotate(int shift) {
         this.angle.setValue(shift + angle.getValue());
-        this.borders.rotate( -shift);
+        this.borders.rotate(-shift);
         notifyObservers();
     }
 
-    /**
-     * Add an Observer for the boat
-     *
-     * @param bo New observer
-     */
+
     public void addObserver(BoatObserver bo) {
         this.boatObservers.add(bo);
     }
 
-    /**
-     * Remove an Observer
-     *
-     * @param bo observer
-     */
     public void removeObserver(BoatObserver bo) {
         this.boatObservers.remove(bo);
     }
 
-    /**
-     * Send boat data to every Observer
-     */
     public void notifyObservers() {
         for (BoatObserver observer : boatObservers) {
             observer.update(this);
         }
     }
 
+    /**
+     * Returns the boat position
+     *
+     * @return Coordinate of the barycenter
+     */
     public Coordinate getPosition() {
         return this.borders.getBarycentre();
     }
