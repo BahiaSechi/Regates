@@ -3,6 +3,7 @@ package regates.mvp.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -23,6 +24,10 @@ public class Board {
     private Wind wind;
 
     private Board() {
+        checkpoints = new ArrayList<>();
+        buoys = new ArrayList<>();
+        coasts = new ArrayList<>();
+        wind = new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
 
     public static Board getInstance() {
