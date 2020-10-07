@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import javafx.beans.property.SimpleIntegerProperty;
 import lombok.Getter;
+import lombok.Setter;
 import regates.mvp.model.boat.Boat;
 import regates.mvp.model.boat.BoatObserver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,9 +21,14 @@ public class Game {
     private final Wind wind;
 
     @Getter
+    @Setter
+    private String configFile;
+
+    @Getter
     private int order = 0;
 
-    public Game() throws Exception {
+    public Game(String configFile) throws Exception {
+        this.configFile = configFile;
         Config c = this.loadConfiguration();
         this.wind = new Wind(getClass().getResource("/regates/mvp/windData.txt").getPath());
         this.checkConfigValidity(c);
@@ -107,7 +112,7 @@ public class Game {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         try {
-            return mapper.readValue(new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("regates/mvp/configFiles/conf_normandie.yaml")).getPath()), Config.class);
+            return mapper.readValue(new File(this.configFile), Config.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
