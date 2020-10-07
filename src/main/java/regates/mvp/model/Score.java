@@ -40,7 +40,6 @@ public class Score {
      */
     public static final Comparator<Score> ComparatorPlayer = Comparator.comparing(Score::getPlayer);
 
-
     @Override
     public String toString() {
         // TODO work on proper formatting data
