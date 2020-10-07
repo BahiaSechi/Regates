@@ -61,6 +61,19 @@ public class GameTest {
     }
 
     @Test
+    public void testTestBoatExitWindow() throws Exception {
+        Game g = new Game(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("configFiles/conf_normandie.yaml")).getPath()));
+        g.getBoat().getBorders().setBarycentre(new Coordinate(0, 0));
+        g.getBoat().getBorders().generateBordersForImage(new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("img/ship.png"))), 45, 56);
+        g.getBoat().getBorders().translateBorders();
+        Assert.assertTrue(g.testBoatExitWindow());
+
+        g.getBoat().getBorders().setBarycentre(new Coordinate(600, 550));
+        g.getBoat().getBorders().translateBorders();
+        Assert.assertFalse(g.testBoatExitWindow());
+    }
+
+    @Test
     public void testTestCheckpointID() throws Exception {
         Game g = new Game(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("configFiles/conf_normandie.yaml")).getPath()));
         g.getBoat().getBorders().setBarycentre(new Coordinate(1100, 400));

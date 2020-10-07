@@ -1,7 +1,10 @@
 package regates.mvp.model;
 
+import javafx.scene.image.Image;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Objects;
 
 public class CoastTest {
 
@@ -14,6 +17,5 @@ public class CoastTest {
         Assert.assertEquals(0, c.getSize().getY(), 0);
 
         Assert.assertEquals("", c.getImgPath());
-
     }
 }

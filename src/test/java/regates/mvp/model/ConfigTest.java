@@ -3,7 +3,9 @@ package regates.mvp.model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
+import java.util.Objects;
 
 public class ConfigTest {
     @Test
@@ -16,5 +18,20 @@ public class ConfigTest {
         Assert.assertEquals(Collections.emptyList(), c.getCheckpoints());
         Assert.assertEquals(Collections.emptyList(), c.getCoasts());
         Assert.assertEquals(5, c.getWindDirection());
+    }
+
+    @Test(expected = Exception.class)
+    public void testInvalidFile() throws Exception {
+        Game g = new Game("invalid_path");
+    }
+
+    @Test(expected = Exception.class)
+    public void testInvalidStartingPoint() throws Exception {
+        Game g = new Game(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("configFiles/conf_invalid.yaml")).getPath()));
+    }
+
+    @Test(expected = Exception.class)
+    public void testInvalidWindStrength() throws Exception {
+        Game g = new Game(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("configFiles/conf_invalid2.yaml")).getPath()));
     }
 }
