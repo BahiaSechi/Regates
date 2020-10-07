@@ -7,6 +7,11 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents borders of an image
+ * Used to handle collisions
+ * @see Coordinate
+ */
 public class Border {
 
     @Getter
