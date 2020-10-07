@@ -10,6 +10,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Represent the Leaderboard of a game
+ *
+ * @Author Elise Le Mazier
+ * @Version 1.0
+ */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Leaderboard {
@@ -17,14 +23,23 @@ public class Leaderboard {
     private List<Score> scores = new ArrayList<>();
     private static Leaderboard instance;
 
+    /**
+     * Create a leaderboard instance
+     *
+     * @return the instance of the leaderboard
+     */
     public static Leaderboard getInstance() {
         if (instance == null)
             instance = new Leaderboard();
         return instance;
     }
 
-    //"/regates/mvp/scoresData.txt"
-    public void readScore(String path) {
+    /**
+     * Allow to read scores from a text file
+     *
+     * @param path the text file's path
+     */
+    public void readScore(String path) {    //"/regates/mvp/scoresData.txt"
         String[] buffer;
         Scanner scanner = null;
         try {
@@ -32,7 +47,7 @@ public class Leaderboard {
             File f = new File(s);
             scanner = new Scanner(f);
 
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -46,14 +61,23 @@ public class Leaderboard {
 
     }
 
+    /**
+     *
+     */
     public void sortByDate() {
         Collections.sort(scores, Score.ComparatorDate);
     }
 
+    /**
+     *
+     */
     public void sortByScore() {
         Collections.sort(scores, Score.ComparatorScore);
     }
 
+    /**
+     *
+     */
     public void sortByName() {
         Collections.sort(scores, Score.ComparatorPlayer);
     }

@@ -7,6 +7,12 @@ import lombok.Setter;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Represent the Score of a game
+ *
+ * @author Elise Le Mazier
+ * @version 1.0
+ */
 @AllArgsConstructor
 @Setter
 @Getter
@@ -16,8 +22,9 @@ public class Score {
     private float value;
     private Date date;
 
-
-
+    /**
+     * Allow to compare two scores by date
+     */
     public static Comparator<Score> ComparatorDate = new Comparator<Score>() {
         @Override
         public int compare(Score o1, Score o2) {
@@ -25,6 +32,9 @@ public class Score {
         }
     };
 
+    /**
+     * Allow to compare two scores by score
+     */
     public static Comparator<Score> ComparatorScore = new Comparator<>() {
         @Override
         public int compare(Score o1, Score o2) {
@@ -32,6 +42,9 @@ public class Score {
         }
     };
 
+    /**
+     * Allow to compare two scores by player's name
+     */
     public static Comparator<Score> ComparatorPlayer = new Comparator<Score>() {
         @Override
         public int compare(Score o1, Score o2) {
