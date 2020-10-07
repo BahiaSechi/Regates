@@ -43,10 +43,9 @@ public class Leaderboard {
         String[] buffer;
         Scanner scanner = null;
         try {
-            String s = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(path)).getPath();
-            File f = new File(s);
-            scanner = new Scanner(f);
-
+            scanner = new Scanner(
+                    new File(Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(path)).getPath())));
+            
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 buffer = line.split(";");
