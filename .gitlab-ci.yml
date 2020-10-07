@@ -47,7 +47,7 @@ javadoc:
   stage: docs
   allow_failure: true
   script:
-    - gradle javadoc
+    - gradlew javadoc
   artifacts:
     when: always
     paths:
