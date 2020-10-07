@@ -22,8 +22,8 @@ public class BoatSpeedTest {
         Boat b = new Boat(new SimpleIntegerProperty(1), new Coordinate(0, 0));
         b.setAngle(new SimpleIntegerProperty(1));
         b.move(1);
-        assertEquals(b.getSpeed(), 1.7, 0.01);
-        assertEquals(b.getPosition().getX(), 0, 0.1);
-        assertEquals(b.getPosition().getY(), -1.7, 0.1);
+        assertEquals(1, b.getSpeed(), 0.1);
+        assertEquals(0, b.getPosition().getX(), 0.1);
+        assertEquals(-1, b.getPosition().getY(), 0.1);
     }
 }
