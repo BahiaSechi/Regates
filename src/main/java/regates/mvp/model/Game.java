@@ -161,7 +161,7 @@ public class Game {
         }
         else if (playerScore.getValue() > min.getValue()) {
             playerScore.setPlayer(capturePlayerName());
-            leaderboard.getScores().remove(leaderboard.getScores().get(leaderboard.getScores().size()-1)); // a revoir
+            leaderboard.getScores().remove(leaderboard.getScores().size() - 1);
             leaderboard.getScores().add(playerScore);
         }
     }
