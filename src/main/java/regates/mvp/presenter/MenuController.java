@@ -1,21 +1,31 @@
 package regates.mvp.presenter;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MenuController {
+public class MenuController implements Initializable {
 
-    Locale locale = new Locale("fr", "FR");
-    ResourceBundle bundle = ResourceBundle.getBundle("regates.mvp.MessageBundle", locale);
-    static final String TITLE = "general.game_title";
+    private final ResourceBundle bundle = ResourceBundle.getBundle("regates.mvp.MessageBundle", new Locale("fr", "FR"));
+    private static final String TITLE = "general.game_title";
+    @Setter
+    private String configPath = Objects.requireNonNull(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("regates/mvp/configFiles/conf_normandie.yaml")).getPath());
+    @FXML
+    private ImageView imgGame;
 
     public void handleExit() {
         Platform.exit();
@@ -29,6 +39,7 @@ public class MenuController {
             Stage stage = new Stage();
             MapController mc = fxmlLoader.getController();
             mc.setStage(stage);
+            mc.setMenuController(this);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(bundle.getString(TITLE));
             stage.setScene(scene);
@@ -47,6 +58,7 @@ public class MenuController {
             BoardController bc = fxmlLoader.getController();
             Scene scene = new Scene(root1, 1310, 983);
             bc.setScene(scene);
+            bc.setConfigPath(this.configPath);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(bundle.getString(TITLE));
@@ -75,5 +87,20 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void editImage(String imgPath) {
+        this.imgGame.setImage(
+                new Image(
+                        Objects.requireNonNull(
+                                Thread.currentThread().getContextClassLoader().getResourceAsStream(imgPath)
+                        )
+                )
+        );
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.editImage("regates/mvp/img/map/cotentin_map.png");
     }
 }
