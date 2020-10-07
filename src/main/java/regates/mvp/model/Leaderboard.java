@@ -20,7 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Leaderboard {
 
-    private List<Score> scores = new ArrayList<>();
+    private final List<Score> scores = new ArrayList<>();
     private static Leaderboard instance;
 
     /**
@@ -55,30 +55,27 @@ public class Leaderboard {
             }
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
-        } finally {
-            scanner.close();
         }
-
     }
 
     /**
      * Allow to sort by date
      */
     public void sortByDate() {
-        Collections.sort(scores, Score.ComparatorDate);
+        scores.sort(Score.ComparatorDate);
     }
 
     /**
      * Allow to sort by score
      */
     public void sortByScore() {
-        Collections.sort(scores, Score.ComparatorScore);
+        scores.sort(Score.ComparatorScore);
     }
 
     /**
      * Allow to sort by name
      */
     public void sortByName() {
-        Collections.sort(scores, Score.ComparatorPlayer);
+        scores.sort(Score.ComparatorPlayer);
     }
 }

@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Represent the Score of a game
@@ -16,6 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
+
 public class Score {
 
     private String player;
@@ -52,4 +55,9 @@ public class Score {
         }
     };
 
+    @Override
+    public String toString() {
+        // TODO work on proper formatting data
+        return player + "\t\t\t" + value + "\t\t\t" + new SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH).format(date);
+    }
 }

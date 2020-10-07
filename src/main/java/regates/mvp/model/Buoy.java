@@ -1,11 +1,16 @@
 package regates.mvp.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
-@AllArgsConstructor
 public class Buoy {
+    @Getter
+    private final double radius;
+    @Getter
+    private final Coordinate position;
 
-    private int id;
-    private String status;
-
+    public Buoy(@JsonProperty("radius") double radius, @JsonProperty("position") Coordinate position) {
+        this.radius = radius;
+        this.position = position;
+    }
 }

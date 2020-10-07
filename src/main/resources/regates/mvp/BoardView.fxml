@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="951.0" prefWidth="1167.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
+<?import javafx.scene.effect.BoxBlur?>
+<GridPane alignment="center" hgap="10" prefHeight="983.0" prefWidth="1310.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="regates.mvp.presenter.BoardController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -22,108 +15,99 @@
         <RowConstraints />
     </rowConstraints>
    <children>
-      <BorderPane prefHeight="948.0" prefWidth="1066.0">
+      <BorderPane prefHeight="983.0" prefWidth="1310.0">
          <top>
-            <MenuBar prefHeight="0.0" prefWidth="1193.0" BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="0.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="Game">
+                <Menu mnemonicParsing="false" text="%menu.game">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Leaderboard" />
+                    <MenuItem mnemonicParsing="false" text="%menu.leaderboard" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="%help.menu">
                   <items>
-                    <MenuItem id="about" fx:id="about" mnemonicParsing="false" onAction="#handleAbout" text="About" />
+                    <MenuItem id="about" fx:id="about" mnemonicParsing="false" onAction="#handleAbout" text="%about.menu" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
          </top>
          <center>
-            <AnchorPane prefHeight="787.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="gameBoard" prefHeight="669.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="648.0" fitWidth="1312.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="709.0" fitWidth="1310.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
-                        <Image url="@img/lightblue.jpg" />
+                        <Image url="@img/map/lightblue.jpg" />
                      </image>
                   </ImageView>
-                  <Circle id="buoy_1" fill="#1f93ff00" layoutX="490.0" layoutY="88.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="456.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/buoy.png" />
-                     </image>
-                  </ImageView>
-                  <Circle id="buoy_2" fill="#1f93ff00" layoutX="145.0" layoutY="310.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="110.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/buoy.png" />
-                     </image>
-                  </ImageView>
-                  <Circle id="buoy_3" fill="#1f93ff00" layoutX="483.0" layoutY="506.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                  <ImageView fitHeight="67.0" fitWidth="66.0" layoutX="449.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/buoy.png" />
-                     </image>
-                  </ImageView>
+
+                  <Label fx:id="labelCheckpoint" contentDisplay="CENTER" layoutX="524.0" layoutY="30.0" opacity="0.34" text="1" textAlignment="CENTER" />
+
+
                   <ImageView fx:id="regate" fitHeight="56.0" fitWidth="45.0" layoutX="567.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/ship.png" />
+                        <Image url="@img/map/ship.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="688.0" fitWidth="415.0" layoutX="739.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/coast.png" />
-                     </image>
-                  </ImageView>
+
+<!--                  <ImageView fitHeight="667.0" fitWidth="445.0" layoutX="864.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                     <image>-->
+<!--                        <Image url="@img/coast.png" />-->
+<!--                     </image>-->
+<!--                  </ImageView>-->
+                  <Circle id="buoy_1" fx:id="nextCheckpoint" fill="#1f93ff00" layoutX="528.0" layoutY="38.0" radius="37.0" stroke="#ff9000" strokeLineCap="ROUND" strokeWidth="2.0">
+                     <effect>
+                        <BoxBlur height="10.0" width="10.0" />
+                     </effect>
+                  </Circle>
                </children>
             </AnchorPane>
          </center>
-         <left>
-            <AnchorPane BorderPane.alignment="CENTER" />
-         </left>
          <bottom>
-            <AnchorPane prefHeight="232.0" prefWidth="1155.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="-Infinity" prefHeight="178.0" prefWidth="1310.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="269.0" fitWidth="449.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="273.0" fitWidth="1310.0" layoutX="-2.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
-                        <Image url="@img/chene.jpg" />
+                        <Image url="@img/dashboard/chene.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="271.0" fitWidth="450.0" layoutX="748.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgWheel" fitHeight="260.0" fitWidth="265.0" layoutX="596.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="596.0" AnchorPane.rightAnchor="454.0" AnchorPane.topAnchor="5.0">
                      <image>
-                        <Image url="@img/chene.jpg" />
+                        <Image url="@img/dashboard/gouv.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="963.0" layoutY="162.0" text="Vent">
+                  <Label fx:id="txtStrength" layoutX="984.0" layoutY="97.0" prefHeight="25.0" prefWidth="170.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" AnchorPane.leftAnchor="1002.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="97.0" />
+                  <Label fx:id="txtWind" layoutX="984.0" layoutY="172.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="1002.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="177.0" />
+                  <Label fx:id="txtCap" layoutX="329.0" layoutY="97.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="828.0" AnchorPane.topAnchor="97.0" />
+                  <Label fx:id="txtSpeed" layoutX="322.0" layoutY="177.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="828.0" AnchorPane.topAnchor="177.0" />
+                  <Label layoutX="1002.0" layoutY="133.0" text="%wind.label" AnchorPane.bottomAnchor="105.0" AnchorPane.leftAnchor="1002.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="146.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <Label layoutX="958.0" layoutY="48.0" text="Force">
+                  <Label layoutX="997.0" layoutY="62.0" text="%force.label" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="997.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="62.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <Label layoutX="106.0" layoutY="171.0" text="Vitesse">
+                  <Label layoutX="338.0" layoutY="146.0" text="%game.speed" AnchorPane.bottomAnchor="105.0" AnchorPane.topAnchor="146.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <Label layoutX="104.0" layoutY="52.0" text="Cap">
+                  <Label layoutX="347.0" layoutY="62.0" text="%game.cap" AnchorPane.bottomAnchor="186.0" AnchorPane.leftAnchor="347.0" AnchorPane.rightAnchor="920.0" AnchorPane.topAnchor="62.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <ImageView fitHeight="270.0" fitWidth="418.0" layoutX="361.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/chene.jpg" />
+                        <Image url="@img/dashboard/wind.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imgWheel" fitHeight="258.0" fitWidth="265.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="1058.8988952636719" AnchorPane.topAnchor="38.0" />
+                  <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/gouv.png" />
+                        <Image url="@img/dashboard/wind_direction.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="txtStrength" layoutX="945.0" layoutY="78.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
-                  <Label fx:id="txtWind" layoutX="945.0" layoutY="201.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
-                  <Label fx:id="txtCap" layoutX="86.0" layoutY="91.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
-                  <Label fx:id="txtSpeed" layoutX="86.0" layoutY="207.0" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white; -fx-padding: 4px;" text="Label" />
                </children>
             </AnchorPane>
          </bottom></BorderPane>

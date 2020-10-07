@@ -7,7 +7,7 @@ plugins {
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'regates.mvp.vue.BoardView'
+mainClassName = 'regates.mvp.vue.MenuView'
 
 repositories {
     mavenCentral()
@@ -42,6 +42,8 @@ dependencies {
     compile 'org.openjfx:javafx-controls:11:linux'
     compile 'org.openjfx:javafx-fxml:11:linux'
     compile 'org.openjfx:javafx-graphics:11:linux'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.11.3'
+
 }
 
 task copyLibFolder(type: Copy) {
@@ -66,5 +68,14 @@ jacocoTestReport {
         xml.enabled false
         csv.enabled false
         html.destination file("${buildDir}/jacocoHtml")
+
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['regates/mvp/presenter/**', 'regates/mvp/vue/**'])
+        })
     }
 }
+targetCompatibility = '10'
+sourceCompatibility = '10'

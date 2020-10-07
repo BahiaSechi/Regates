@@ -1,11 +1,7 @@
-package regates.mvp.presenter;
+package regates.mvp.model.boat;
 
-import regates.mvp.model.boat.BoatObserver;
-
-public interface Observable {
+public interface BoatObservable {
     void addObserver(BoatObserver observer);
-
     void removeObserver(BoatObserver observer);
-
     void notifyObservers();
 }
