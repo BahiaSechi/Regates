@@ -8,13 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 public class BoatSpeedTest {
     @Test
-    public void should_return_first_boat_speed() {
-        Boat b = new Boat(new SimpleIntegerProperty(1), null);
-        double speed = b.determinateSpeed(1);
-        assertEquals(1.7, speed, 0.01);
-    }
-
-    @Test
     public void should_rotate_boat() {
         Boat b = new Boat(new SimpleIntegerProperty(1), null);
         int angle1 = b.getAngle().getValue();

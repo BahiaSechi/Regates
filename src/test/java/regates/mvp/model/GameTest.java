@@ -7,7 +7,7 @@ import regates.mvp.model.boat.BoatObserver;
 public class GameTest {
 
     @Test
-    public void testStartStopGame() {
+    public void testStartStopGame() throws Exception {
         Game g = new Game();
         int before = Thread.activeCount();
         g.start();
@@ -16,13 +16,13 @@ public class GameTest {
     }
 
     @Test
-    public void testgetT() {
+    public void testgetT() throws Exception {
         Game g = new Game();
         Assert.assertEquals(Integer.valueOf(0), g.getBoat().getAngle().getValue());
     }
 
     @Test
-    public void testAddObserver() {
+    public void testAddObserver() throws Exception {
         Game g = new Game();
         BoatObserver bo = boat -> {
         };

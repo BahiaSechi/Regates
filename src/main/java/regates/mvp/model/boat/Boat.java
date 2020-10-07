@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import regates.mvp.model.Border;
 import regates.mvp.model.Coordinate;
-import regates.mvp.model.utils.FileReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class Boat implements BoatObservable {
         this.borders = new Border();
         this.borders.setBarycentre(position);
         this.borders.translateBorders();
-        Boat.boatSpeeds = FileReader.readFile(getClass().getResource("/regates/mvp/windData.txt").getPath());
     }
 
     /**
@@ -50,33 +48,14 @@ public class Boat implements BoatObservable {
     }
 
     /**
-     * Determine the speed of the boat according to wind strength and angle
-     *
-     * @param windStrength Wind Strength
-     * @return Boat Speed
-     */
-    public double determinateSpeed(int windStrength) {
-        String[] speedByAngle = Boat.boatSpeeds[Math.abs(this.angle.getValue() % 180)].split(" "); // Extract the line matching the angle
-        String[] strengths = Boat.boatSpeeds[0].split(" ");
-        int index;
-        for (index = 1; index < strengths.length; index++) {
-            // Identify column index matching wind strength
-            if (strengths[index].equals("" + windStrength)) {
-                break;
-            }
-        }
-        return Float.parseFloat(speedByAngle[index]);
-    }
-
-    /**
      * Move the boat according to its angle and speed
      *
-     * @param windStrength Wind Strength
+     * @param speed Speed according to wind strength
      */
-    public synchronized void move(int windStrength) {
+    public synchronized void move(double speed) {
         try {
             this.borders.resetTranslation();
-            this.speed = determinateSpeed(windStrength);
+            this.speed = speed;
             double a = angle.getValue() - 90;
             double adj = speed * Math.cos(Math.toRadians(a));
             double opp = speed * Math.sin(Math.toRadians(a));
