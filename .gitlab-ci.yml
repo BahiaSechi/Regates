@@ -19,9 +19,9 @@ stages:
 .base_stage: &base_stage
   tags:
     - gitlab-runner-ensicaen
-    rules:
-      - if: '$CI_COMMIT_BRANCH == "master"'
-        when: always
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
   image: openjdk:11-jdk
 
 
