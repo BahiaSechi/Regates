@@ -32,8 +32,8 @@ public class Game {
     private long pScore = 0;
     //Pour popup
     final JFrame parent = new JFrame();
-
     JButton button = new JButton();
+
     Leaderboard leaderboard = Leaderboard.getInstance() ;
     List<Score> scores = new ArrayList<>();
 
@@ -129,7 +129,7 @@ public class Game {
         }
         else if (playerScore.getValue() > min.getValue()) {
             playerScore.setPlayer(capturePlayerName());
-            leaderboard.getScores().remove(min); // a revoir
+            leaderboard.getScores().remove(leaderboard.getScores().get(leaderboard.getScores().size()-1)); // a revoir
             leaderboard.getScores().add(playerScore);
         }
     }
