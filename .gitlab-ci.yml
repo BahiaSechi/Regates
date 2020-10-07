@@ -47,7 +47,7 @@ javadoc:
   stage: docs
   allow_failure: true
   script:
-    - gradlew -Pci --console=plain javadoc
+    - ./gradlew -Pci --console=plain javadoc
   artifacts:
     when: always
     paths:
