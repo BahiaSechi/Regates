@@ -73,7 +73,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['regates/mvp/presenter/**', 'regates/mvp/vue/**'])
+                    exclude: ['regates/mvp/presenter/**', 'regates/mvp/view/**'])
         })
     }
 }
