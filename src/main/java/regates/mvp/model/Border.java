@@ -23,6 +23,8 @@ public class Border {
 
     @Getter
     private Coordinate imgShift;
+    @Getter
+    private boolean inRotation;
 
     public Border() {
         this.points = new ArrayList<>();
@@ -77,6 +79,7 @@ public class Border {
      * @param angle Boat angle
      */
     public void rotate(double angle) {
+        this.inRotation = true;
         resetTranslation(); // Place borders at origin
         // Rotate around origin
         for (Coordinate c : this.points) {
@@ -87,6 +90,7 @@ public class Border {
             c.setY(-c.getX() * sinAngle + c.getY() * cosAngle);
         }
         translateBorders(); // Place back borders
+        this.inRotation = false;
     }
 
     /**

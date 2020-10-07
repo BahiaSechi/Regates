@@ -110,7 +110,11 @@ public class Game implements GameObservable {
      *
      * @return True if the boat exit the window
      */
-    public boolean testBoatExitWindow() {
+    public synchronized boolean testBoatExitWindow() {
+        if (boat.getBorders().isInRotation()) {
+            return false;
+        }
+
         for (Coordinate c : boat.getBorders().getPoints()) {
             if (c.getX() < 0 || c.getX() > 1310 || c.getY() < 0 || c.getY() > 983) {
                 return true;
