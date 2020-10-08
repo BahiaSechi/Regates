@@ -64,7 +64,6 @@ public class Boat implements BoatObservable {
             double opp = speed * Math.sin(Math.toRadians(a));
             this.borders.setBarycentre(new Coordinate(this.borders.getBarycentre().getX() + adj, this.borders.getBarycentre().getY() + opp));
             this.borders.translateBorders();
-            System.out.println(this.getPosition());
             notifyObservers();
         } catch (Exception e) {
             e.printStackTrace();

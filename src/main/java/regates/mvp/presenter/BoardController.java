@@ -79,10 +79,10 @@ public class BoardController implements BoatObserver, GameObserver {
 
             // Display the checkpoint
             Checkpoint next = Board.getInstance().getCheckpoint(this.game.getOrder());
-            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX() + nextCheckpoint.getRadius() * 0.9);
-            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY() + nextCheckpoint.getRadius() * 0.9);
-            AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX());
-            AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY());
+            AnchorPane.setLeftAnchor(labelCheckpoint, next.getPosition().getX());
+            AnchorPane.setTopAnchor(labelCheckpoint, next.getPosition().getY());
+            AnchorPane.setLeftAnchor(nextCheckpoint, next.getPosition().getX() - next.getRadius());
+            AnchorPane.setTopAnchor(nextCheckpoint, next.getPosition().getY() - next.getRadius());
             labelCheckpoint.setText(String.valueOf(next.getOrder()));
             nextCheckpoint.setRadius(next.getRadius());
             txtSpeed.setText((Math.round(boat.getSpeed() * 10) / 10.0) + " nd");

@@ -116,7 +116,7 @@ public class Game implements GameObservable {
         }
 
         for (Coordinate c : boat.getBorders().getPoints()) {
-            if (c.getX() < 0 || c.getX() > 1310 || c.getY() < 0 || c.getY() > 983) {
+            if (c.getX() < 0 || c.getX() > 1310 || c.getY() < 0 || c.getY() > 709) {
                 return true;
             }
         }
